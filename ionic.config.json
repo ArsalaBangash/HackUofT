@@ -1,5 +1,18 @@
 {
   "name": "HackUofT",
   "app_id": "",
-  "type": "ionic-angular"
+  "type": "ionic-angular",
+  "watch": {
+    "sass": [
+      "scss/**/*.scss"
+    ],
+    "html": [
+      "www/**/*.html"
+    ],
+    "livereload": [
+      "www/**/*.html",
+      "www/**/*.js",
+      "www/**/*.css"
+    ]
+  }
 }
