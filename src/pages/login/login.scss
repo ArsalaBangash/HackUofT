@@ -1,11 +1,15 @@
 page-login {
 
-    .title {
-        text-color: #ffffff
+
+    h2 {
+        font-family: Roboto;
+        text-decoration-color: textColor;
+        color: #ffffff;
+        font-size: 4em;
     }
 
     .login-content {
-    background: #56CA96;
+    background: #013A6F;
 
     .logo-row {
       padding-top: 50px;
@@ -13,7 +17,7 @@ page-login {
     }
 
     .login-box {
-      background: #399F8B;
+      background:#013A6F;
       padding: 20px 20px 0px 20px;
       margin-top: 30px;
     }
@@ -44,13 +48,13 @@ page-login {
      }
 
      .submit-btn {
-       background: #51CFB1;
+       background: #38A7C0;
        border-radius: 30px !important;
        border: 1px solid #ffffff;
      }
 
      .continue-button {
-         background: #51CFB1;
+         background: #38A7C0;
      }
 
 
