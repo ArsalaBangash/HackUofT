@@ -7,6 +7,7 @@ import { SearchPage } from '../search/search';
 
 
 @Component({
+  selector: 'page-tabs',
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
