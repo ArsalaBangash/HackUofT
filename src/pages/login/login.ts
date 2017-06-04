@@ -16,7 +16,9 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  tabsPage = TabsPage
+  tabsPage = TabsPage;
+  inputEmail: string = "";
+  inputPassword: string = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
   public alertCtrl: AlertController) {
@@ -29,6 +31,15 @@ export class LoginPage {
       buttons: ['OK']
     });
     alert.present();
+  }
+
+  register() {
+    var emailCheck = this.inputEmail.match(/^(\w|[\.])+@((mail\.)?utoronto\.ca|cs.toronto.edu)$/);
+    if (emailCheck == null) {
+        console.log("Match Not Successful");
+    } else {
+        console.log("Match Successful");
+    }
   }
 
 
