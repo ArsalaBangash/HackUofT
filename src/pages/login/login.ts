@@ -24,10 +24,10 @@ export class LoginPage {
   public alertCtrl: AlertController) {
   }
 
-  loginFailedAlert() {
+  loginFailedAlert(message) {
     let alert = this.alertCtrl.create({
       title: 'Login Failed',
-      subTitle: 'One or more of the fields was incorrectly entered. Please Try again!',
+      subTitle: message,
       buttons: ['OK']
     });
     alert.present();
@@ -36,13 +36,16 @@ export class LoginPage {
   register() {
     var emailCheck = this.inputEmail.match(/^(\w|[\.])+@((mail\.)?utoronto\.ca|cs.toronto.edu)$/);
     if (emailCheck == null) {
+        var errorMessage = "You need one of the following email addresses:\
+        @mail.utoronto.ca\ @utoronto.ca\ @cs.toronto.edu";
+        this.loginFailedAlert(errorMessage);
         console.log("Match Not Successful");
     } else {
         console.log("Match Successful");
     }
   }
 
-  
+
 
 
 }
