@@ -12,6 +12,8 @@ import { SearchPage } from '../pages/search/search';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
+import { HttpModule, JsonpModule } from '@angular/http';
+
 
 
 @NgModule({
@@ -22,10 +24,12 @@ import { LoginPage } from '../pages/login/login';
     HomePage,
     TabsPage,
     SearchPage,
-    LoginPage
+    LoginPage,
   ],
   imports: [
     BrowserModule,
+    HttpModule,
+    JsonpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -36,7 +40,8 @@ import { LoginPage } from '../pages/login/login';
     HomePage,
     TabsPage,
     SearchPage,
-    LoginPage
+    LoginPage,
+
   ],
   providers: [
     StatusBar,
