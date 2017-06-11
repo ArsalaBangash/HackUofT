@@ -1,11 +1,38 @@
 <ion-header>
-  <ion-navbar color=primary>
-    <ion-title color=white>
-      Discover
-    </ion-title>
-  </ion-navbar>
+  <ion-searchbar
+    [(ngModel)]="myInput"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
 </ion-header>
 
-<ion-content padding>
+
+<ion-content>
+
+<ion-list>
+	<ion-card class="adv-map" *ngFor="let i of items">
+	  <div style="position: relative">
+		<img src="assets/img/hackathon.jpg">
+	  </div>
+    <ion-item>
+      <ion-icon color="subtle" large item-start name='code-working'></ion-icon>
+      <h2>Name of Hackathon</h2>
+      <p>Location of Hackathon</p>
+    </ion-item>
+    <ion-item actions>
+      <span ion-text item-start color="subtle" class="item-bold">Start Date</span>
+      <span ion-text item-start color="subtle">-</span>
+      <span ion-text item-start color="subtle">End Date</span>
+      <button ion-button color="primary" clear item-end icon-left>
+        <ion-icon name='star-outline'></ion-icon>
+      </button>
+    </ion-item>
+	</ion-card>
+</ion-list>
+
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
 
 </ion-content>
