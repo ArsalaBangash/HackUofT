@@ -34,6 +34,22 @@ export class LoginPage {
 		alert.present();
 	}
 
+	login() {
+		if (this.isRegistered()) {
+			this.proceedLogin();
+		} else {
+			this.showAlert("Login Error", "User is not registered");
+		}
+	}
+
+	isRegistered() {
+
+	}
+
+	proceedLogin() {
+
+	}
+
 	registrationEmailCheck() {
 		var emailCheck = this.inputEmail.match(/^(\w|[\.])+@((mail\.)?utoronto\.ca|cs.toronto.edu)$/);
 		var errorMessage;
