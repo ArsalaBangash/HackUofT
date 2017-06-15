@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { AlertController } from 'ionic-angular';
-import { Http, Headers, RequestOptions, Response} from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs';
+import {LogRegService} from '../../services/log_reg_service'
+import { User } from '../../models/user'
+import { LogRegCallback } from '../../models/log_reg_callback'
 import 'rxjs/add/operator/map';
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: this.headers });
@@ -19,10 +22,13 @@ export class LoginPage {
 	inputUsername = "";
 	inputEmail: string = "";
 	inputPassword: string = "";
+	logRegService: LogRegService;
+
 
 
 	constructor(public navCtrl: NavController, public navParams: NavParams,
 		public alertCtrl: AlertController, private http: Http) {
+		this.logRegService = new LogRegService(http)
 	}
 
 	showAlert(title, message) {
@@ -32,22 +38,6 @@ export class LoginPage {
 			buttons: ['OK']
 		});
 		alert.present();
-	}
-
-	login() {
-		if (this.isRegistered()) {
-			this.proceedLogin();
-		} else {
-			this.showAlert("Login Error", "User is not registered");
-		}
-	}
-
-	isRegistered() {
-
-	}
-
-	proceedLogin() {
-
 	}
 
 	registrationEmailCheck() {
@@ -63,34 +53,26 @@ export class LoginPage {
 			this.showAlert("Registration Failed", errorMessage);
 		}
 		else {
-			this.registerUser().subscribe(
-                value => this.handleRegistrationCallback(value[0]),
+			this.logRegService.registerUser(this.inputEmail,
+				this.inputUsername,
+				this.inputPassword).subscribe(
+                value => this.handleRegistrationCallback(value),
 				error => this.showAlert('Error', 'There was an error during registration'));
 		}
 	}
 
-    handleRegistrationCallback(status) {
+    handleRegistrationCallback(callBack) {
         var alertHeading, alertBody;
-        switch(status) {
-            case "success":
+        switch (callBack.status) {
+            case 0:
                 alertHeading = "Registration Successful";
                 alertBody = "Please check your email for an validation link";
                 break;
-            case "error":
+            case 1:
                 alertHeading = "Registration Failed";
-                alertBody = status[1];
+                alertBody = callBack.errorMessage;
                 break;
         }
         this.showAlert(alertHeading, alertBody);
     }
-
-	registerUser(): Observable<Response> {
-		let user = {
-			"email": this.inputEmail, "name": this.inputUsername,
-			"password": this.inputPassword
-		};
-		return this.http.post(url, user, options)
-			.map((res: Response) => res.json())
-			.catch((error: any) => Observable.throw(error.json().error || 'Server error'));
-	}
 }
