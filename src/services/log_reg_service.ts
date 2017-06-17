@@ -14,18 +14,12 @@ export class LogRegService {
 
 	constructor(private http: Http) { }
 
-	getUser(): Observable<User> {
-		return this.http.get(this.loginURL)
-			.map(this.extractData)
-			.catch(this.handleError);
-	}
-
 	loginUser(email,password): Observable<LogRegCallback> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('email', email);
 		params.set('password', password);
 		return this.http.get(this.loginURL,{ search: params})
-			.map((r: Response) => r.json() as LogRegCallback)
+			.map(this.extractData)
 			.catch(this.handleError);
 	}
 
@@ -40,9 +34,7 @@ export class LogRegService {
 	}
 
 	private extractData(res: Response) {
-		let body = res.json();
-		console.log(body.data);
-		return body.data || {};
+		return res.json() as LogRegCallback;
 	}
 
 	private handleError(error: Response | any) {
