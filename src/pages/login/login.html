@@ -15,25 +15,20 @@
           <ion-item>
             <ion-input type="email" placeholder="Email" name="email" [(ngModel)]="inputEmail"></ion-input>
           </ion-item>
+        <ion-item>
+          <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="inputPassword"></ion-input>
+        </ion-item>
           <ion-item>
             <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="inputUsername"></ion-input>
           </ion-item>
-
-          <ion-item>
-            <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="inputPassword"></ion-input>
-          </ion-item>
-
         </ion-list>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col class="signup-col">
-        <button ion-button class="submit-btn" (click)="loginFailedAlert()">Login</button>
+        <button ion-button class="submit-btn" (click)="login()">Login</button>
         <button ion-button class="submit-btn" (click)="registrationEmailCheck()">Register</button>
-        <button ion-button class="continue-button" block round icon-only margin-top="0.8em" [navPush]="tabsPage">
-              <ion-icon name= "md-home" ></ion-icon>
-          </button>
       </ion-col>
     </ion-row>
   </div>
