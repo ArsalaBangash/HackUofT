@@ -49,10 +49,7 @@ export class LoginPage {
 		if (this.inputEmail == "" || this.inputPassword == "") {
 			this.showAlert(this.loginErrorTitle, this.loginErrorMessage);
 		} else {
-			this.logRegService.loginUser(this.inputEmail, this.inputPassword)
-				.subscribe(
-                value => this.handleLoginCallback(value),
-				error => this.showAlert(this.loginErrorTitle, this.loginFailedMessage));
+			// TODO: COMPLETE THIS FUNCTION
 		}
 
 
@@ -75,12 +72,8 @@ export class LoginPage {
 
 	register() {
 		if (this.registrationEmailCheck() && this.registrationUserCheck()) {
-			console.log(true)
-			this.logRegService.registerUser(this.inputEmail,
-				this.inputUsername,
-				this.inputPassword).subscribe(
-                value => this.handleRegistrationCallback(value),
-				error => this.showAlert(this.regErrorTitle, this.regErrorMessage));
+			// TODO: COMPLETE THIS FUNCTION
+
 		}
 	}
 
@@ -141,16 +134,9 @@ export class LoginPage {
         var alertHeading, alertBody;
 		console.log(callBack.status);
 		console.log(callBack.message);
-        switch (callBack.status) {
-            case 0:
-                alertHeading = "Registration Successful";
-                alertBody = "Please check your email for an validation link";
-                break;
-            case 1:
-                alertHeading = "Registration Failed";
-                alertBody = callBack.message;
-                break;
-        }
+        // TODO: Handle the cases for the callback status and adjust the messages
+        // accordingly
+
         this.showAlert(alertHeading, alertBody);
     }
 }

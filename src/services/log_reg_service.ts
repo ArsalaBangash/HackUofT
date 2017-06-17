@@ -14,13 +14,12 @@ export class LogRegService {
 
 	constructor(private http: Http) { }
 
-	loginUser(email,password): Observable<LogRegCallback> {
+	loginUser(email, password): Observable<LogRegCallback> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('email', email);
 		params.set('password', password);
-		return this.http.get(this.loginURL,{ search: params})
-			.map(this.extractData)
-			.catch(this.handleError);
+		// TODO: COMPLETE THE HTTP GET CALL with the given search params
+
 	}
 
 	registerUser(email, username, password): Observable<LogRegCallback> {
@@ -28,9 +27,7 @@ export class LogRegService {
 			"email": email, "name": username,
 			"password": password
         };
-		return this.http.post(this.registerURL, user, options)
-			.map(this.extractData)
-			.catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+		// TODO: COMPLETE THE HTTP POST CALL with the given search params
 	}
 
 	private extractData(res: Response) {
