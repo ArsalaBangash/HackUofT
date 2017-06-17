@@ -23,12 +23,31 @@ export class LoginPage {
 	inputEmail: string = "";
 	inputPassword: string = "";
 	logRegService: LogRegService;
+	loginErrorTitle = "Login Error";
+	loginErrorMessage = "Incorrect Login information entered";
+	regErrorTitle = "Registration Error";
+	regFailTitle = "Registration Failed";
+	regErrorMessage = "There was an error during registration";
 
 
 
 	constructor(public navCtrl: NavController, public navParams: NavParams,
 		public alertCtrl: AlertController, private http: Http) {
 		this.logRegService = new LogRegService(http)
+	}
+
+
+	login() {
+		if (this.inputEmail == "" && this.inputPassword == "") {
+			this.showAlert(this.loginErrorTitle, this.loginErrorMessage);
+		} else {
+			this.logRegService.loginUser(this.inputEmail,this.inputPassword)
+			.subscribe(
+                value => this.handleLoginCallback(value),
+				error => this.showAlert(this.regErrorTitle, this.regErrorMessage));
+		}
+
+
 	}
 
 	showAlert(title, message) {
@@ -50,19 +69,35 @@ export class LoginPage {
 			console.log("Match Not Successful");
 		} else if (this.inputUsername.length < 6) {
 			errorMessage = "Your username must be at least 6 characters long"
-			this.showAlert("Registration Failed", errorMessage);
+			this.showAlert(this.regFailTitle, errorMessage);
 		}
 		else {
 			this.logRegService.registerUser(this.inputEmail,
 				this.inputUsername,
 				this.inputPassword).subscribe(
                 value => this.handleRegistrationCallback(value),
-				error => this.showAlert('Error', 'There was an error during registration'));
+				error => this.showAlert(this.regErrorTitle, this.regErrorMessage));
 		}
+	}
+
+	handleLoginCallback(callBack) {
+		console.log(callBack.status);
+		console.log(callBack.message);
+        switch (callBack.status) {
+            case 0:
+                this.navCtrl.push(TabsPage);
+                break;
+            case 1:
+				this.showAlert(this.loginErrorTitle, callBack.message);
+				break;
+
+        }
 	}
 
     handleRegistrationCallback(callBack) {
         var alertHeading, alertBody;
+		console.log(callBack.status);
+		console.log(callBack.message);
         switch (callBack.status) {
             case 0:
                 alertHeading = "Registration Successful";
@@ -70,7 +105,7 @@ export class LoginPage {
                 break;
             case 1:
                 alertHeading = "Registration Failed";
-                alertBody = callBack.errorMessage;
+                alertBody = callBack.message;
                 break;
         }
         this.showAlert(alertHeading, alertBody);
