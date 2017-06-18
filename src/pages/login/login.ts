@@ -51,7 +51,7 @@ export class LoginPage {
 		} else {
 			this.logRegService.loginUser(this.inputEmail, this.inputPassword)
 				.subscribe(
-                value => this.handleLoginCallback(value),
+                (callback: LogRegCallback) => this.handleLoginCallback(callback),
 				error => this.showAlert(this.loginErrorTitle, this.loginFailedMessage));
 		}
 
@@ -79,7 +79,7 @@ export class LoginPage {
 			this.logRegService.registerUser(this.inputEmail,
 				this.inputUsername,
 				this.inputPassword).subscribe(
-                value => this.handleRegistrationCallback(value),
+                (callback: LogRegCallback) => this.handleRegistrationCallback(callback),
 				error => this.showAlert(this.regErrorTitle, this.regErrorMessage));
 		}
 	}
@@ -118,7 +118,7 @@ export class LoginPage {
 	 * page if successful, otherwise displays an error
 	 * @param  {LogRegCallback} callBack [description]
 	 */
-	handleLoginCallback(callBack) {
+	handleLoginCallback(callBack: LogRegCallback) {
 		console.log("LOGIN CALLBACK");
         switch (callBack.status) {
             case 0:
@@ -137,7 +137,7 @@ export class LoginPage {
 	 * if successful, otherwise displays an error.
 	 * @param  {LogRegCallback} callBack [description]
 	 */
-    handleRegistrationCallback(callBack) {
+    handleRegistrationCallback(callBack: LogRegCallback) {
         var alertHeading, alertBody;
 		console.log(callBack.status);
 		console.log(callBack.message);
