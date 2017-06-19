@@ -8,7 +8,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SearchPage } from '../pages/search/search';
-
+import {HackathonInfoPage} from '../pages/hackathon-info/hackathon-info'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
@@ -22,7 +22,8 @@ import { LoginPage } from '../pages/login/login';
     HomePage,
     TabsPage,
     SearchPage,
-    LoginPage
+    LoginPage,
+    HackathonInfoPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +37,8 @@ import { LoginPage } from '../pages/login/login';
     HomePage,
     TabsPage,
     SearchPage,
-    LoginPage
+    LoginPage,
+    HackathonInfoPage
   ],
   providers: [
     StatusBar,
