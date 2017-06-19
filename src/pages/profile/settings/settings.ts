@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { RegionPage } from './region/region';
+import { ProfilePage } from '../profile';
+import { UserInfoPage } from '../../userinfo/userinfo';
 
 /**
  * Generated class for the SettingsPage page.
@@ -13,7 +16,11 @@ import { NavController } from 'ionic-angular';
 })
 export class SettingsPage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public userinfo:UserInfoPage) {
+  }
+
+  nextPage() {
+    this.navCtrl.push(RegionPage);
   }
 
   ionViewDidLoad() {

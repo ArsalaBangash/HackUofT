@@ -8,7 +8,10 @@ import { ProfilePage } from '../pages/profile/profile';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SearchPage } from '../pages/search/search';
-import { SettingsPage } from '../pages/settings/settings';
+import { SettingsPage } from '../pages/profile/settings/settings';
+import { RegionPage } from '../pages/profile/settings/region/region';
+import { UserInfoPage } from '../pages/userinfo/userinfo';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,6 +30,7 @@ import { HttpModule, JsonpModule } from '@angular/http';
     SearchPage,
     LoginPage,
     SettingsPage,
+    RegionPage,
   ],
   imports: [
     BrowserModule,
@@ -44,11 +48,13 @@ import { HttpModule, JsonpModule } from '@angular/http';
     SearchPage,
     LoginPage,
     SettingsPage,
+    RegionPage,
 
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    UserInfoPage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

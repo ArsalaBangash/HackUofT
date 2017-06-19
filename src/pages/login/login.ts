@@ -5,6 +5,7 @@ import { AlertController } from 'ionic-angular';
 import { Http, Headers, RequestOptions, Response} from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
+
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: this.headers });
 let url = "http://edmondumolu.me:3001/users"
@@ -15,6 +16,7 @@ let url = "http://edmondumolu.me:3001/users"
 	templateUrl: 'login.html',
 })
 export class LoginPage {
+	
 	tabsPage = TabsPage;
 	inputUsername = "";
 	inputEmail: string = "";
