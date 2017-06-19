@@ -8,6 +8,7 @@ import {LogRegService} from '../../services/log_reg_service'
 import { User } from '../../models/user'
 import { LogRegCallback } from '../../models/log_reg_callback'
 import 'rxjs/add/operator/map';
+
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: this.headers });
 let url = "http://edmondumolu.me:3001/users"
@@ -18,6 +19,7 @@ let url = "http://edmondumolu.me:3001/users"
 	templateUrl: 'login.html',
 })
 export class LoginPage {
+	
 	tabsPage = TabsPage;
 	inputUsername = "";
 	inputEmail: string = "";

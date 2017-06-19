@@ -1,0 +1,22 @@
+page-settings {
+
+  ion-navbar.regionNav {
+    position: absolute;
+    left: 0;
+
+    .toolbar-background.toolbar-background-md {
+      background: white;
+    }
+
+    ion-title {
+        text-align: left;
+
+        .toolbar-title-md {
+          font-family: "Roboto", "Helvetica Neue", sans-serif;
+          text-align: left;
+          font-weight: 800;
+        	text-transform: lowercase;
+        }
+    }
+  }
+}
