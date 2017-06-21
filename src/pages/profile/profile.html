@@ -1,24 +1,40 @@
 <ion-header>
+
 	<link href="https://fonts.googleapis.com/css?family=Raleway:800,900" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Arimo" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:600" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Asap:500|Montserrat:700" rel="stylesheet">
 
+	<ion-navbar color="primary">
 
-	<ion-navbar color=primary>
-		<i class="fa fa-sliders" aria-hidden="true"></i>
-		<ion-title color=white>
-	  	Profile
-		</ion-title>
-	</ion-navbar>
+		<ion-title color="white">Profile</ion-title>
+<!--     	<ion-searchbar (input)="getItems($event)"></ion-searchbar>
+ -->
+    	<ion-buttons end>
+		    <button ion-button icon-only color="royal" (click)="nextPage();">
+		    	<ion-icon name="settings"></ion-icon>
+		    </button>
+	    </ion-buttons>
+
+  	</ion-navbar>
 
 </ion-header>
 
 
 <ion-content class="card-background-page">
 
-<div class="search-panel"> <span>Search for other users</span>
-	<i class="fa fa-search" aria-hidden="true"></i>
+<div class="search-list" *ngIf="hideSearch">
+</div>
+
+<div class="search-panel" id="searchBox">
+	<i id="searchIcon" class="fa fa-search" aria-hidden="true" (click)="showSearchList();"></i>
+	<input id="input" type="text" name="item" value="Search for other users">
+
+	<ion-list padding *ngIf="hideSearch">
+		<ion-item *ngFor="let item of items" (click)="showUser(item[0])">
+	    {{ item[1] }}
+	  </ion-item>
+	</ion-list>
 </div>
 
 <div class="user-panel">
@@ -26,14 +42,21 @@
 	<div class="profile-holder">
 		<img src="https://pacdn.500px.org/8607703/0345bbea9978e645ac1922fb443c6506d514384c/2.jpg?3">
 	</div>
-	<h1>Distinct Mind</h1>
-	<h2>Montreal, CA</h2>
+	<h1 [innerHTML]="username"></h1>
+	<h2 [innerHTML]="userlocation"></h2>
+
+	<div class="button-holder">
+		<div class="buttons">
+			<div class="follow-btn" (click)="followUser();">+ FOLLOW</div>
+		</div>
+	</div>
+
 </div>
 
 <div class="follower-panel">
-	
+
 	<div class="followers">
-		<span class="follow-number">12,080</span><br>
+		<span class="follow-number" [innerHTML]="followValue"></span><br>
 		<span class="follow-text">FOLLOWERS</span>
 	</div>
 
@@ -42,19 +65,8 @@
 	</div>
 
 	<div class="followings">
-		<span class="follow-number">311</span><br>
+		<span class="follow-number" [innerHTML]="followerValue"></span><br>
 		<span class="follow-text">FOLLOWINGS</span>
-	</div>
-
-	<div class="button-holder">
-		<div class="buttons">
-			<div class="message-btn">MESSAGE</div>
-		</div>
-
-		<div class="buttons">
-			<div class="follow-btn">+ FOLLOW</div>			
-		</div>
-
 	</div>
 
 </div>
@@ -70,4 +82,8 @@
     	<!-- <div class="card-title">São Paulo</div>
     	<div class="card-subtitle">41 Listings</div> -->
   	</ion-card>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
 </ion-content>
