@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import {LogRegService} from '../../services/log_reg_service'
 import { User } from '../../models/user'
 import { LogRegCallback } from '../../models/log_reg_callback'
+import { Storage } from '@ionic/storage';
+
 import 'rxjs/add/operator/map';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -19,12 +21,13 @@ let url = "http://edmondumolu.me:3001/users"
 	templateUrl: 'login.html',
 })
 export class LoginPage {
-	
+
 	tabsPage = TabsPage;
 	inputUsername = "";
 	inputEmail: string = "";
 	inputPassword: string = "";
 	logRegService: LogRegService;
+	storageService: Storage;
 	loginErrorTitle = "Login Error";
 	loginFailedMessage = "Incorrect Login information entered";
 	loginErrorMessage = "An error occured when logging in";
@@ -38,8 +41,14 @@ export class LoginPage {
 
 
 	constructor(public navCtrl: NavController, public navParams: NavParams,
-		public alertCtrl: AlertController, private http: Http) {
-		this.logRegService = new LogRegService(http)
+		public alertCtrl: AlertController, private http: Http, private storage: Storage) {
+		this.logRegService = new LogRegService(http);
+		this.storageService = storage;
+		this.storageService.get('isLoggedIn').then((loginStatus) => {
+			if (loginStatus == true) {
+				this.navCtrl.push(TabsPage);
+			}
+		});
 	}
 
 	/**
@@ -125,6 +134,9 @@ export class LoginPage {
         switch (callBack.status) {
             case 0:
 				console.log("Login success");
+				this.storageService.set('isLoggedIn', true)
+				//TODO: PUT THE CURRENT USER IN
+				//this.storageService.set('currentUser', USER)
                 this.navCtrl.push(TabsPage);
                 break;
             case 1:
