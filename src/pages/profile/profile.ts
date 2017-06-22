@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { SettingsPage } from './settings/settings';
 import { UserInfoPage } from '../userinfo/userinfo';
+import { Storage } from '@ionic/storage';
+
 
 let url = "http://edmondumolu.me:3001/users"
 
@@ -29,7 +31,9 @@ export class ProfilePage {
   public hideSearch: Boolean = false;
   public followingUser: Boolean = false;
 
-  constructor(public navCtrl: NavController, private http: Http, public userinfo:UserInfoPage) {
+  constructor(public navCtrl: NavController, private http: Http,
+      public userinfo:UserInfoPage, private storage: Storage) {
+    storage.get('currentUser').then(user => console.log(user));
     this.setUserInfo();
   }
 

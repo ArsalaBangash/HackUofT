@@ -44,11 +44,6 @@ export class LoginPage {
 		public alertCtrl: AlertController, private http: Http, private storage: Storage) {
 		this.logRegService = new LogRegService(http);
 		this.storageService = storage;
-		this.storageService.get('isLoggedIn').then((loginStatus) => {
-			if (loginStatus == true) {
-				this.navCtrl.push(TabsPage);
-			}
-		});
 	}
 
 	/**
@@ -134,10 +129,12 @@ export class LoginPage {
         switch (callBack.status) {
             case 0:
 				console.log("Login success");
-				this.storageService.set('isLoggedIn', true)
-				//TODO: PUT THE CURRENT USER IN
-				//this.storageService.set('currentUser', USER)
-                this.navCtrl.push(TabsPage);
+				this.storageService.set('isLoggedIn', true);
+				console.log(callBack.message);
+				var tempUser = JSON.parse(callBack.message) as User;
+				this.storageService.set('currentUser', tempUser);
+				console.log(tempUser);
+				this.navCtrl.push(TabsPage);
                 break;
             case 1:
 				console.log("Login NOT success");
