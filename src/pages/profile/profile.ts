@@ -5,8 +5,6 @@ import { Http, Headers, RequestOptions, Response} from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { SettingsPage } from './settings/settings';
-
-import { UserInfoPage } from '../../models/userinfo';
 import { Storage } from '@ionic/storage';
 
 let url = "http://edmondumolu.me:3001/users"
@@ -34,7 +32,7 @@ export class ProfilePage {
   public followingUser: Boolean = false;
 
 
-constructor(public navCtrl: NavController, private http: Http, public userinfo:UserInfoPage,private navParams: NavParams,private storage: Storage) {
+constructor(public navCtrl: NavController, private http: Http,private navParams: NavParams,private storage: Storage) {
 
     if (navParams.get('showSearchBar') == false) {
       this.showSearchBar = false;
@@ -43,12 +41,12 @@ constructor(public navCtrl: NavController, private http: Http, public userinfo:U
 
     console.log("created PP");
     console.log("Hide search: "+ this.hideSearch);
-    this.setUserInfo(this.userinfo.user_id, false);
+    //this.setUserInfo(this.userinfo.user_id, false);
   }
 
   ionViewWillEnter() {
     console.log("ENTERING VIEW");
-    this.setUserInfo(this.userinfo.user_id, false);
+    //this.setUserInfo(this.userinfo.user_id, false);
   }
 
   nextPage() {
@@ -62,8 +60,8 @@ constructor(public navCtrl: NavController, private http: Http, public userinfo:U
   setUserInfo(index, toPush) {
 
     console.log("In Set User Info");
-    this.userlocation = this.userinfo.userlocation;
-    this.userinfo.user_id = index;
+    //this.userlocation = this.userinfo.userlocation;
+    //this.userinfo.user_id = index;
 
     this.http.get(url).map(res => res.json()).subscribe(data => {
 
