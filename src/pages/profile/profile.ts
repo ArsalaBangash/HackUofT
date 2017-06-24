@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 import { Http, Headers, RequestOptions, Response} from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import { SettingsPage } from './settings/settings';
-import { UserInfoPage } from '../userinfo/userinfo';
+import { UserInfoPage } from '../../models/userInfo';
 
 let url = "http://edmondumolu.me:3001/users"
 
@@ -15,7 +16,6 @@ let url = "http://edmondumolu.me:3001/users"
 })
 
 export class ProfilePage {
-
   searchQuery: string = '';
   items: (string | number)[][];
 
@@ -27,14 +27,25 @@ export class ProfilePage {
   followerValue: string = "";
 
   public hideSearch: Boolean = false;
+  public showSearchBar: Boolean = true;
+  public selfProfile: Boolean = false;
   public followingUser: Boolean = false;
 
-  constructor(public navCtrl: NavController, private http: Http, public userinfo:UserInfoPage) {
-    this.setUserInfo();
+  constructor(public navCtrl: NavController, private http: Http, public userinfo:UserInfoPage,private navParams: NavParams) {
+
+    if (navParams.get('showSearchBar') == false) {
+      this.showSearchBar = false;
+      this.selfProfile = true;
+    }
+
+    console.log("created PP");
+    console.log("Hide search: "+ this.hideSearch);
+    this.setUserInfo(this.userinfo.user_id, false);
   }
 
   ionViewWillEnter() {
-    this.setUserInfo();
+    console.log("ENTERING VIEW");
+    this.setUserInfo(this.userinfo.user_id, false);
   }
 
   nextPage() {
@@ -45,49 +56,33 @@ export class ProfilePage {
 
   }
 
-  setUserInfo() {
-    // return this.http.get(url).map(res => res.json()).subscribe(data => {
-    // });
+  setUserInfo(index, toPush) {
+
+    console.log("In Set User Info");
     this.userlocation = this.userinfo.userlocation;
+    this.userinfo.user_id = index;
 
     this.http.get(url).map(res => res.json()).subscribe(data => {
 
+      if (toPush) {
+        console.log("PUSHING VIEW");
+        this.showSearchList();
+        this.navCtrl.push(ProfilePage, {showSearchBar:false});
+        return;
+      }
         this.items = [];
-        this.currentUser = data[2];
-        this.username = data[2].name;
+        this.currentUser = data[index];
+        this.username = data[index].name;
 
 
-        this.followValue = data[2].following_users.length;
-        this.followerValue = data[2].following_users.length;
+        this.followValue = data[index].following_users.length;
+        this.followerValue = data[index].following_users.length;
 
         var i:number;
 
         for(i = 0;i < data.length;i++) {
            this.items.push([i, data[i].name]);
         }
-        console.log(this.items);
-      });
-  }
-
-  showUser(index) {
-    this.http.get(url).map(res => res.json()).subscribe(data => {
-
-        this.navCtrl.push(ProfilePage);
-
-        this.items = [];
-        this.currentUser = data[2];
-        this.username = data[2].name;
-
-
-        this.followValue = data[2].following_users.length;
-        this.followerValue = data[2].following_users.length;
-
-        var i:number;
-
-        for(i = 0;i < data.length;i++) {
-           this.items.push([i, data[i].name]);
-        }
-        console.log(this.items);
       });
   }
 

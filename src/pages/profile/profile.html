@@ -26,12 +26,12 @@
 <div class="search-list" *ngIf="hideSearch">
 </div>
 
-<div class="search-panel" id="searchBox">
+<div class="search-panel" id="searchBox" *ngIf="showSearchBar">
 	<i id="searchIcon" class="fa fa-search" aria-hidden="true" (click)="showSearchList();"></i>
 	<input id="input" type="text" name="item" value="Search for other users">
 
 	<ion-list padding *ngIf="hideSearch">
-		<ion-item *ngFor="let item of items" (click)="showUser(item[0])">
+		<ion-item *ngFor="let item of items" (click)="setUserInfo(item[0], true)">
 	    {{ item[1] }}
 	  </ion-item>
 	</ion-list>
@@ -45,7 +45,7 @@
 	<h1 [innerHTML]="username"></h1>
 	<h2 [innerHTML]="userlocation"></h2>
 
-	<div class="button-holder">
+	<div class="button-holder" *ngIf="selfProfile">
 		<div class="buttons">
 			<div class="follow-btn" (click)="followUser();">+ FOLLOW</div>
 		</div>

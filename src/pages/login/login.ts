@@ -19,7 +19,7 @@ let url = "http://edmondumolu.me:3001/users"
 	templateUrl: 'login.html',
 })
 export class LoginPage {
-	
+
 	tabsPage = TabsPage;
 	inputUsername = "";
 	inputEmail: string = "";
@@ -49,7 +49,8 @@ export class LoginPage {
 	 */
 	login() {
 		if (this.inputEmail == "" || this.inputPassword == "") {
-			this.showAlert(this.loginErrorTitle, this.loginErrorMessage);
+			this.navCtrl.push(TabsPage);
+			//this.showAlert(this.loginErrorTitle, this.loginErrorMessage);
 		} else {
 			this.logRegService.loginUser(this.inputEmail, this.inputPassword)
 				.subscribe(

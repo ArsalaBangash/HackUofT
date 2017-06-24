@@ -42,13 +42,17 @@ page-profile {
 	}
 	.search-panel {
 		width: 90%;
-	    height: 34px;
-	    position: relative;
- 	    z-index: 5;
-	    margin: 0 auto;
-	    margin-top: 15px;
-	    border: 1px solid rgba(255,255,255,0.6);
-	    border-radius: 10px;
+    height: 34px;
+    position: relative;
+    z-index: 5;
+    margin: 0 auto;
+    margin-top: 15px;
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 10px;
+
+		ion-list ion-item {
+			cursor: pointer;
+		}
 
 	    input {
 	    	    background: none;
@@ -78,8 +82,12 @@ page-profile {
 
 	.user-panel {
 
-		height: 260px;
-		margin-top: -20px;
+		height: auto;
+    position: relative;
+    display: inline-block;
+    margin-top: -20px;
+    margin-bottom: 50px;
+    width: 100%;
 
 		.settings {
 			position: absolute;
