@@ -10,7 +10,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/profile/settings/settings';
 import { RegionPage } from '../pages/profile/settings/region/region';
-import { UserInfoPage } from '../pages/userinfo/userinfo';
+import { UserInfoPage } from '../models/userInfo';
+import { CurrentUserInfoPage } from '../models/currentUserInfo';
+
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -59,6 +61,7 @@ import { IonicStorageModule } from '@ionic/storage';
     StatusBar,
     SplashScreen,
     UserInfoPage,
+    CurrentUserInfoPage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -53,7 +53,8 @@ export class LoginPage {
 	 */
 	login() {
 		if (this.inputEmail == "" || this.inputPassword == "") {
-			this.showAlert(this.loginErrorTitle, this.loginErrorMessage);
+			this.navCtrl.push(TabsPage);
+			//this.showAlert(this.loginErrorTitle, this.loginErrorMessage);
 		} else {
 			this.logRegService.loginUser(this.inputEmail, this.inputPassword)
 				.subscribe(
