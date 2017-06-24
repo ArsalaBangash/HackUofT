@@ -14,8 +14,30 @@ page-home {
     font-weight: bold;
     color: #fff;
   }
+}
+.hcard{
+  width: 30vh;
+  height:34vh;
+}
 
+ion-scroll[scrollX] {
+  white-space: nowrap;
+  height: 35vh;
+  overflow: hidden;
 
+  .scroll-item {
+    display: inline-block;
+  }
+  .image{
+    width: 25vh;
+    margin-left: -10px;
+    // height:50px;
+  }
+}
+
+/* Hide ion-content scrollbar */
+::-webkit-scrollbar{
+  display:none;
 }
 
 }

@@ -14,6 +14,32 @@
      <ion-list-header>
             You're attending:
     </ion-list-header>
+    <ion-row>
+        <ion-item>
+          <ion-scroll scrollX="true" direction="x" class="scroll-height">
+            <ion-card class="scroll-item hcard" *ngFor="let item of items">
+              <ion-item>
+                   <img src="assets/img/hackathon.jpg">
+              </ion-item>
+              <ion-row flex-wrap: nowrap>
+                <ion-col >
+                  <ion-card-title>Name of Hackathon</ion-card-title>
+                  <p>Location of Hackathon</p>
+                  
+                </ion-col>
+                </ion-row>
+                <ion-item actions>
+                  <button ion-button color="primary" clear item-end icon-left (click)="changeIcon(item)">
+                    <ion-icon [name] = "item.iconName"></ion-icon>
+                  </button>
+                  <button ion-button color="primary" clear item-end icon-left>
+                    <ion-icon name = "share-alt"></ion-icon>
+                  </button>
+                </ion-item>
+            </ion-card>
+          </ion-scroll>
+        </ion-item>
+      </ion-row>
   <ion-item>
     <ion-thumbnail item-left>
       <img src="assets/img/hackathon.jpg">
