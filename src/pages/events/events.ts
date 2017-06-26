@@ -4,10 +4,10 @@ import { Platform, ActionSheetController } from 'ionic-angular';
 
 
 @Component({
-  selector: 'page-search',
-  templateUrl: 'search.html'
+  selector: 'page-events',
+  templateUrl: 'events.html'
 })
-export class SearchPage {
+export class EventsPage {
 
   Favorite: string = "home"
   items = [
