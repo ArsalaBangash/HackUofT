@@ -12,6 +12,7 @@ import { SettingsPage } from '../pages/profile/settings/settings';
 import { RegionPage } from '../pages/profile/settings/region/region';
 import { UserInfoPage } from '../models/userInfo';
 import { CurrentUserInfoPage } from '../models/currentUserInfo';
+import { Endpoints } from '../models/endpoints'
 
 
 
@@ -61,6 +62,7 @@ import { IonicStorageModule } from '@ionic/storage';
     StatusBar,
     SplashScreen,
     UserInfoPage,
+    Endpoints,
     CurrentUserInfoPage,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

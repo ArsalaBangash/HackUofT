@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {User} from '../models/user';
+import { Endpoints } from '../models/endpoints'
 import {LogRegCallback} from '../models/log_reg_callback'
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: this.headers });
@@ -12,9 +13,9 @@ export class LogRegService {
 	loginURL: string;
 	registerURL: string;
 
-	constructor(private http: Http, private globals: Globals) {
-		this.loginURL = globals.API_LOGIN;
-		this.registerURL = globals.API_REGISTER;
+	constructor(private http: Http, private endpoints: Endpoints) {
+		this.loginURL = endpoints.API_LOGIN;
+		this.registerURL = endpoints.API_REGISTER;
 	}
 
 	loginUser(email, password): Observable<LogRegCallback> {

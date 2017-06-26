@@ -8,6 +8,8 @@ import {LogRegService} from '../../services/log_reg_service'
 import { User } from '../../models/user'
 import { LogRegCallback } from '../../models/log_reg_callback'
 import { Storage } from '@ionic/storage';
+import { Endpoints } from '../../models/endpoints'
+
 
 import 'rxjs/add/operator/map';
 
@@ -41,8 +43,10 @@ export class LoginPage {
 
 
 	constructor(public navCtrl: NavController, public navParams: NavParams,
-		public alertCtrl: AlertController, private http: Http, private storage: Storage) {
-		this.logRegService = new LogRegService(http);
+		public alertCtrl: AlertController, private endpoints: Endpoints,
+		 private http: Http,
+		 private storage: Storage) {
+		this.logRegService = new LogRegService(http, endpoints);
 		this.storageService = storage;
 	}
 
