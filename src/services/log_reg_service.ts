@@ -3,11 +3,10 @@ import { Http, Response, Headers, RequestOptions, URLSearchParams} from '@angula
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import {User} from '../models/user';
 import { Endpoints } from '../models/endpoints'
 import {LogRegCallback} from '../models/log_reg_callback'
 let headers = new Headers({ 'Content-Type': 'application/json' });
-let options = new RequestOptions({ headers: this.headers });
+let options = new RequestOptions({ headers: headers });
 
 export class LogRegService {
 	loginURL: string;
