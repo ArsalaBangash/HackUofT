@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RegionPage } from './region/region';
-import { ProfilePage } from '../profile';
 import { UserInfoPage } from '../../../models/userInfo';
 
 /**

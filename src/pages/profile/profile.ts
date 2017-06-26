@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
-import { Http, Headers, RequestOptions, Response} from '@angular/http';
-import { Observable } from 'rxjs';
+import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SettingsPage } from './settings/settings';
 import { Storage } from '@ionic/storage';

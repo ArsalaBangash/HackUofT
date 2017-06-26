@@ -2,18 +2,13 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { AlertController } from 'ionic-angular';
-import { Http, Headers, RequestOptions, Response } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Http } from '@angular/http';
 import {LogRegService} from '../../services/log_reg_service'
 import { User } from '../../models/user'
 import { LogRegCallback } from '../../models/log_reg_callback'
 import { Storage } from '@ionic/storage';
-
+import { Endpoints } from '../../models/endpoints'
 import 'rxjs/add/operator/map';
-
-let headers = new Headers({ 'Content-Type': 'application/json' });
-let options = new RequestOptions({ headers: this.headers });
-let url = "http://edmondumolu.me:3001/users"
 
 @IonicPage()
 @Component({
@@ -41,8 +36,10 @@ export class LoginPage {
 
 
 	constructor(public navCtrl: NavController, public navParams: NavParams,
-		public alertCtrl: AlertController, private http: Http, private storage: Storage) {
-		this.logRegService = new LogRegService(http);
+		public alertCtrl: AlertController, private endpoints: Endpoints,
+		private http: Http,
+		private storage: Storage) {
+		this.logRegService = new LogRegService(http, endpoints);
 		this.storageService = storage;
 	}
 
