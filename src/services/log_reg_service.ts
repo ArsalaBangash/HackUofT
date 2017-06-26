@@ -9,16 +9,19 @@ let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: this.headers });
 
 export class LogRegService {
-	loginURL = "http://edmondumolu.me:3001/users/login/"
-	registerURL = "http://edmondumolu.me:3001/users"
+	loginURL: string;
+	registerURL: string;
 
-	constructor(private http: Http) { }
+	constructor(private http: Http, private globals: Globals) {
+		this.loginURL = globals.API_LOGIN;
+		this.registerURL = globals.API_REGISTER;
+	}
 
-	loginUser(email,password): Observable<LogRegCallback> {
+	loginUser(email, password): Observable<LogRegCallback> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('email', email);
 		params.set('password', password);
-		return this.http.get(this.loginURL,{ search: params})
+		return this.http.get(this.loginURL, { search: params })
 			.map(this.extractData)
 			.catch(this.handleError);
 	}
