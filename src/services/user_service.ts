@@ -10,17 +10,35 @@ let options = new RequestOptions({ headers: headers });
 
 export class UserService {
 	eventURL: string;
+	followersURL: string;
 
 	constructor(private http: Http, private endpoints: Endpoints) {
 		this.eventURL = endpoints.API_GET_USER_EVENTS;
+		this.followersURL = endpoints.API_GET_USER_FOLLOWERS;
 	}
 
     /**
-     * Makes a get request to the API to return all user events
-     * @return {Observable<String[]>} The Observable containing all events
+     * * Makes a get request to the API to return all user events
+     * @param  {string} userID [The user in question]
+     * @return {Observable<String[]>} The Observable containing all event IDs
      */
-	getUserEvents(): Observable<String[]>{
-		return this.http.get(this.eventURL)
+	getUserEvents(userID: string): Observable<String[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', userID);
+		return this.http.get(this.eventURL, { search: params })
+			.map(this.extractData)
+            .catch(this.handleError)
+    }
+
+	/**
+	 * * Makes a get request to the API to return all user followers
+	 * @param  {string} userID [The user in question]
+	 * @return {Observable<String[]>} The Observable containing all follower IDs
+	 */
+	getUserFollowers(userID: string): Observable<String[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', userID);
+		return this.http.get(this.followersURL, { search: params })
 			.map(this.extractData)
             .catch(this.handleError)
     }
@@ -28,7 +46,7 @@ export class UserService {
     private extractData(res: Response) {
 		return res.json() as String[];
 	}
-	
+
 	private handleError(error: Response | any) {
 		let errMsg: string;
 		if (error instanceof Response) {
@@ -42,6 +60,3 @@ export class UserService {
 		return Observable.throw(errMsg);
 	}
 }
-
-
-	
