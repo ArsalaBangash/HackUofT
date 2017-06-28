@@ -7,4 +7,5 @@ export class Endpoints {
   readonly API_LOGIN = "https://edmondumolu.me:4001/users/login/";
   readonly API_REGISTER = "https://edmondumolu.me:4001/users";
   readonly API_GET_EVENTS = "https://edmondumolu.me:4001/events";
+  readonly API_GET_USER_EVENTS = "https://edmondumolu.me:4001/users/events";
 }
