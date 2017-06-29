@@ -18,7 +18,7 @@ export class EventService {
 
 	}
 
-	// added by Bolarinwa
+	
 	getEvent(eventID): Observable<Event>{
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id', eventID);

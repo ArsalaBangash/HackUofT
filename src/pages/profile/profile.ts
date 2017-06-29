@@ -59,7 +59,7 @@ constructor(public navCtrl: NavController, private http: Http,private navParams:
     this.username = user.name;
     //Display follower/following value
     this.followValue = "0";
-    this.followerValue  = user.following_users.length;
+    this.followerValue  = user.following.length;
     this.setUserInfo(user,false);
   }
 

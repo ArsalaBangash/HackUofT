@@ -33,21 +33,18 @@ export class HomePage {
     this.UserService = new UserService(http, endpoints);
 
     this.storageService.get('currentUser').then(
-      (user) => this.currentUserID = user._id
-    );
-
-
-    this.getUserEvents(this.currentUserID);
-    this.userEvents = this.userEventID.map(id => this.getEvent(id));
-
+      (user) => this.getUserEvents(user._id));
   }
 
 
 
   private getUserEvents(user_id: string) {
     this.UserService.getUserEvents(user_id)
-      .subscribe((callback: String[]) => this.userEventID = callback);
+      .subscribe((callback: String[]) => this.userEventID = callback,
+                  (error) => console.log(error),
+                  () => this.userEvents = this.userEventID.map(event => this.getEvent(event)));
   }
+
   private getEvent(event_id: String): Event {
     var userEvent: Event;
     this.EventService.getEvent(event_id)
