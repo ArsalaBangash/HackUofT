@@ -25,15 +25,30 @@ export class HomePage {
   currentUserID: string;
 
   userEventID: String[];
-  userEvents: Event[]
+  userEvents: Event[];
+  
+  items;
 
   constructor(public navCtrl: NavController, private http: Http, private endpoints: Endpoints, private storage: Storage) {
+    this.items = [
+      {
+      "iconName": "ios-star-outline",
+      }
+    ];
     this.storageService = storage;
     this.EventService = new EventService(http, endpoints);
     this.UserService = new UserService(http, endpoints);
 
     this.storageService.get('currentUser').then(
       (user) => this.getUserEvents(user._id));
+
+
+    for(var i = 0; i < 30; i++){
+      this.items.push(
+        {
+          "iconName": "ios-star-outline",
+      });
+    }
   }
 
 
