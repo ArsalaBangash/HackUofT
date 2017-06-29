@@ -45,36 +45,6 @@
         </button>
       </div>
 
-        <script>
-        var app = angular.module('myApp', []);
-        app.controller('myCtrl',function($scope, $ionicPopup) {
-
-         $scope.listdata = [];
-         $scope.list = ["Jay","Bola", "Santi", "Arsala", "Ose"]
-         $scope.getFriendsList = function(){
-           $scope.listdata = [];
-           for (var i=0; i<5;i++){
-             $scope.listdata.push($scope.list[i])
-           }
-
-           var getFriendsList = $ionicPopup.show({
-             template: '<ion-list>                                '+
-                       '  <ion-item ng-repeat="item in listdata"> '+
-                       '    {{item}}                              '+
-                       '  </ion-item>                             '+
-                       '</ion-list>                               ',
-
-             title: 'List',
-             scope: $scope,
-             buttons: [
-               { text: 'Cancel' },
-             ]
-           });
-         }
-       });
-       </script>
-
-
 
 
       </ion-col>

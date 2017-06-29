@@ -9,7 +9,6 @@ import { HomePage } from '../pages/home/home';
 import { EventsPage } from '../pages/events/events';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SearchPage } from '../pages/search/search';
-//import { EventsPage } from '../pages/events/events';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
