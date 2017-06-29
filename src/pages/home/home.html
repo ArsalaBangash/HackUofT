@@ -25,7 +25,7 @@
                 <ion-col >
                   <ion-card-title>Name of Hackathon</ion-card-title>
                   <p>Location of Hackathon</p>
-                  
+
                 </ion-col>
                 </ion-row>
                 <ion-item actions>
@@ -52,7 +52,7 @@
       <img src="assets/img/tech-event.jpg">
     </ion-thumbnail>
     <h2>Events</h2>
-    <button ion-button clear item-right>View</button>
+    <button ion-button clear item-right [navPush]="eventsPage">View</button>
   </ion-item>
 </ion-list>
 </ion-content>
