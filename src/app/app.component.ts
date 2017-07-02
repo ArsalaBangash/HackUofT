@@ -8,7 +8,6 @@ import { Storage } from '@ionic/storage';
 import { TabsPage } from '../pages/tabs/tabs';
 
 
-
 @Component({
     templateUrl: 'app.html'
 })
@@ -17,6 +16,7 @@ export class MyApp {
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
         private storage: Storage) {
+        /*
         storage.get('isLoggedIn').then((loginStatus) => {
             if (loginStatus == true) {
                 this.rootPage = TabsPage;
@@ -24,6 +24,8 @@ export class MyApp {
                 this.rootPage = LoginPage;
             }
         });
+        */
+        this.rootPage = TabsPage;
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.

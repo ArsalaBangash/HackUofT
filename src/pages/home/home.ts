@@ -9,6 +9,8 @@ import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
 import { Event } from '../../models/event'
 
+import { EventsPage } from '../events/events';
+
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -28,6 +30,8 @@ export class HomePage {
   userEvents: Event[];
   
   items;
+
+  eventsPage = EventsPage;
 
   constructor(public navCtrl: NavController, private http: Http, private endpoints: Endpoints, private storage: Storage) {
     this.items = [
