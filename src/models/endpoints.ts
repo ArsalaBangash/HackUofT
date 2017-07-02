@@ -7,11 +7,11 @@ export class Endpoints {
   readonly API_LOGIN = "https://edmondumolu.me:4001/users/login/";
   readonly API_REGISTER = "https://edmondumolu.me:4001/users";
   readonly API_GET_USER_BY_ID = "https://edmondumolu.me:4001/users/find";
-  readonly API_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following";
-  readonly API_USER_FOLLOWER = "https://edmondumolu.me:4001/users/follower";
-  readonly API_GET_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/get_user_following";
-  readonly API_GET_USER_FOLLOWER = "https://edmondumolu.me:4001/users/get_user_follower";
-  readonly API_DELETE_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/delete_user_following";
-  readonly API_DELETE_USER_FOLLOWER =  "https://edmondumolu.me:4001/users/delete_user_follower";
+  readonly API_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following/add";
+  readonly API_USER_FOLLOWER = "https://edmondumolu.me:4001/users/followers/add";
+  readonly API_GET_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following";
+  readonly API_GET_USER_FOLLOWER = "https://edmondumolu.me:4001/users/followers";
+  readonly API_DELETE_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following/delete";
+  readonly API_DELETE_USER_FOLLOWER =  "https://edmondumolu.me:4001/users/followers/delete";
   readonly API_GET_EVENTS = "https://edmondumolu.me:4001/events";
 }
