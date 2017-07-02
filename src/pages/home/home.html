@@ -26,17 +26,15 @@
                   <h2>{{event.name}}</h2>
                   <p>{{event.address}}</p>
                   <p>{{event.start}} - {{event.end}}</p>
+                <ion-item actions>
+                  <button ion-button color="primary" clear item-end icon-left (click)="changeIcon(item)">
+                    <ion-icon name = "md-star"></ion-icon>
+                  </button>
+                </ion-item>
 
                 </ion-col>
                 </ion-row>
-                <ion-item actions>
-                  <button ion-button color="primary" clear item-end icon-left (click)="changeIcon(item)">
-                    <ion-icon [name] = "item.iconName"></ion-icon>
-                  </button>
-                  <button ion-button color="primary" clear item-end icon-left>
-                    <ion-icon name = "share-alt"></ion-icon>
-                  </button>
-                </ion-item>
+                
             </ion-card>
           </ion-scroll>
         </ion-item>

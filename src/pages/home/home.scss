@@ -16,20 +16,20 @@ page-home {
   }
 }
 .hcard{
-  width: 30vh;
-  height:34vh;
+  width: 50vh;
+  height:50vh;
 }
 
 ion-scroll[scrollX] {
   white-space: nowrap;
-  height: 35vh;
+  height: 50vh;
   overflow: hidden;
 
   .scroll-item {
     display: inline-block;
   }
   .image{
-    width: 25vh;
+    width: 14vh;
     margin-left: -10px;
     // height:50px;
   }

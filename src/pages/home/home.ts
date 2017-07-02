@@ -27,36 +27,68 @@ export class HomePage {
   currentUserID: string;
 
   userEventID: String[];
-  userEvents: Event[];
+  // userEvents: Event[];
   
   items;
 
   eventsPage = EventsPage;
+  
+  userEvents = [
+    {
+      name: "Event1",
+      city: "Mississauga",
+      country: "Canada",
+      address: "3359 Mississauga Rd, Mississauga, Ontario",
+      start: "July 2nd",
+      end: "July 2nd",
+      picture: "no pic",
+      links: [],
+      type: "meetup",
+      description: "Regular Event"
+    },
+    {
+      name: "Event2",
+      city: "Toronto",
+      country: "Canada",
+      address: "459 Spadina Avenue, Toronto, Ontario",
+      start: "July 3nd",
+      end: "July 3nd",
+      picture: "no pic",
+      links: [],
+      type: "meetup",
+      description: "Regular Event"
+    },
+    {
+      name: "Event3",
+      city: "Mississauga",
+      country: "Canada",
+      address: "3359 Mississauga Rd, Mississauga, Ontario",
+      start: "July 3nd",
+      end: "July 3nd",
+      picture: "no pic",
+      links: [],
+      type: "meetup",
+      description: "Regular Event"
+    }
+  ];
 
   constructor(public navCtrl: NavController, private http: Http, private endpoints: Endpoints, private storage: Storage) {
-    this.items = [
-      {
-      "iconName": "ios-star-outline",
-      }
-    ];
+    
     this.storageService = storage;
     this.EventService = new EventService(http, endpoints);
     this.UserService = new UserService(http, endpoints);
 
+    /*
     this.storageService.get('currentUser').then(
       (user) => this.getUserEvents(user._id));
+    */
 
 
-    for(var i = 0; i < 30; i++){
-      this.items.push(
-        {
-          "iconName": "ios-star-outline",
-      });
-    }
+
   }
 
 
-
+  /*
   private getUserEvents(user_id: string) {
     this.UserService.getUserEvents(user_id)
       .subscribe((callback: String[]) => this.userEventID = callback,
@@ -72,7 +104,7 @@ export class HomePage {
 
 
   }
-
+  */
 
 
 }
