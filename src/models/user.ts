@@ -4,5 +4,6 @@ export class User {
 		public name: string,
 		public email: string,
 		public verified: boolean,
-		public following_users) { }
+		public followers,
+		public following) { }
 }
