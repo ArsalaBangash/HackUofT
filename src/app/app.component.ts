@@ -17,6 +17,7 @@ export class MyApp {
 
     constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
         private storage: Storage) {
+            storage.clear();
         storage.get('isLoggedIn').then((loginStatus) => {
             if (loginStatus == true) {
                 this.rootPage = TabsPage;
