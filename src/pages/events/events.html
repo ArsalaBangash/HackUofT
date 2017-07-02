@@ -14,9 +14,9 @@
 	<ion-card *ngFor="let item of items">
     <ion-row>
       <ion-col>
-        <ion-card-title>Name of Event</ion-card-title>
-        <p>Location of Event</p>
-        <p>Start Date - End Date</p>
+        <h2>{{item.name}}</h2>
+        <p>{{item.city}}</p>
+        <p>{{item.start}} - {{item.end}}</p>
 
       </ion-col>
 

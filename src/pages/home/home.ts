@@ -10,8 +10,8 @@ import { User } from '../../models/user'
 import { Event } from '../../models/event'
 
 import { EventsPage } from '../events/events';
-
 import 'rxjs/add/operator/map';
+
 
 @Component({
   selector: 'page-home',
@@ -69,6 +69,11 @@ export class HomePage {
     this.EventService.getEvent(event_id)
       .subscribe((callback: Event) => userEvent = callback);
     return userEvent;
+  eventsPage = EventsPage
+  constructor(public navCtrl: NavController) {
+    
   }
+
+
 
 }
