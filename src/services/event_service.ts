@@ -18,7 +18,10 @@ export class EventService {
 
 	}
 
-	
+	/**
+     * Makes a get request to the API to return a event using Event ID
+     * @return {Observable<Event[]>} The Observable containing all events
+     */
 	getEvent(eventID): Observable<Event>{
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id', eventID);
