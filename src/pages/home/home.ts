@@ -69,9 +69,8 @@ export class HomePage {
     this.EventService.getEvent(event_id)
       .subscribe((callback: Event) => userEvent = callback);
     return userEvent;
-  eventsPage = EventsPage
-  constructor(public navCtrl: NavController) {
-    
+
+
   }
 
 

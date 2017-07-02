@@ -14,8 +14,8 @@ export class UserService {
 	followersURL: string;
 
 	constructor(private http: Http, private endpoints: Endpoints) {
-		this.eventURL = endpoints.API_GET_USER_EVENTS;
-		this.followersURL = endpoints.API_GET_USER_FOLLOWERS;
+		// this.eventURL = endpoints.API_GET_USER_EVENTS;
+		this.followersURL = endpoints.API_GET_USER_FOLLOWER;
 	}
 
     /**
