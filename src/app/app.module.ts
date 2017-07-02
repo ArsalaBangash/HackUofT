@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { ForumPage } from '../pages/forum/forum';
 import { ProfilePage } from '../pages/profile/profile';
 import { HomePage } from '../pages/home/home';
+import { EventsPage } from '../pages/events/events';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/profile/settings/settings';
@@ -31,6 +32,7 @@ import { IonicStorageModule } from '@ionic/storage';
     ForumPage,
     ProfilePage,
     HomePage,
+    EventsPage,
     TabsPage,
     SearchPage,
     LoginPage,
@@ -51,6 +53,7 @@ import { IonicStorageModule } from '@ionic/storage';
     ForumPage,
     ProfilePage,
     HomePage,
+    EventsPage,
     TabsPage,
     SearchPage,
     LoginPage,

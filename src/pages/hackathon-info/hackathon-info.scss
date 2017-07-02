@@ -1,0 +1,61 @@
+page-hackathon-info {
+
+    ion-icon {
+        font-size: 40px;
+    }
+
+    .Banner {
+        position: relative;
+        background-image: url('../../assets/img/hackathon.jpg');
+        width: 100%;
+        height:200px;
+    }
+
+
+    .Logo-panel {
+        width: 140px;
+        height: 140px;
+        position: absolute;
+        //background-color: rgb(56,167,192);
+        left:0; right:0;
+        top:0; bottom:0;
+        margin:auto;
+        .LogoHolder {
+            border: 4px solid white;
+            border-radius: 80px;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            z-index: 2;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        .picture {
+            width:180px;
+            height:180px;
+        }
+
+        .Logo {
+            position: absolute;
+            left:0; right:0;
+            top:0; bottom:0;
+            margin:auto;
+            width: 40px;
+            height: 40px;
+            Transform: translate(-50%, -50%);
+        }
+        .h2 {
+            position: absolute;
+		    color: white;
+		    text-align: center;
+		    z-index: 2;
+        }
+    }
+
+    .SocialMedia {
+        height: 55px;
+        width: 100%;
+
+    }
+}
