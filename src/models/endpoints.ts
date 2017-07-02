@@ -6,7 +6,12 @@ export class Endpoints {
   readonly API_BASENAME = 'https://edmondumolu.me:4001';
   readonly API_LOGIN = "https://edmondumolu.me:4001/users/login/";
   readonly API_REGISTER = "https://edmondumolu.me:4001/users";
+  readonly API_GET_USER_BY_ID = "https://edmondumolu.me:4001/users/find";
+  readonly API_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following";
+  readonly API_USER_FOLLOWER = "https://edmondumolu.me:4001/users/follower";
+  readonly API_GET_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/get_user_following";
+  readonly API_GET_USER_FOLLOWER = "https://edmondumolu.me:4001/users/get_user_follower";
+  readonly API_DELETE_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/delete_user_following";
+  readonly API_DELETE_USER_FOLLOWER =  "https://edmondumolu.me:4001/users/delete_user_follower";
   readonly API_GET_EVENTS = "https://edmondumolu.me:4001/events";
-  readonly API_GET_USER_EVENTS = "https://edmondumolu.me:4001/users/events";
-  readonly API_GET_USER_FOLLOWERS = "https://edmondumolu.me:4001/users/followers";
 }

@@ -46,9 +46,15 @@
 	<h1 [innerHTML]="username"></h1>
 	<h2 [innerHTML]="userlocation"></h2>
 
-	<div class="button-holder" *ngIf="!showSearchBar">
+	<div class="button-holder" *ngIf="!showSearchBar && !followingUser">
 		<div class="buttons">
 			<div class="follow-btn" (click)="followUser();">+ FOLLOW</div>
+		</div>
+	</div>
+
+	<div class="button-holder" *ngIf="followingUser">
+		<div class="buttons">
+			<div class="follow-btn" (click)="unfollowUser();">UNFOLLOW</div>
 		</div>
 	</div>
 
@@ -57,7 +63,7 @@
 <div class="follower-panel">
 
 	<div class="followers">
-		<span class="follow-number" [innerHTML]="followValue"></span><br>
+		<span class="follow-number" [innerHTML]="followerValue"></span><br>
 		<span class="follow-text">FOLLOWERS</span>
 	</div>
 
@@ -66,7 +72,7 @@
 	</div>
 
 	<div class="followings">
-		<span class="follow-number" [innerHTML]="followerValue"></span><br>
+		<span class="follow-number" [innerHTML]="followingValue"></span><br>
 		<span class="follow-text">FOLLOWINGS</span>
 	</div>
 

@@ -3,9 +3,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Endpoints } from '../models/endpoints'
-import { LogRegCallback } from '../models/log_reg_callback'
-import { Event } from '../models/event'
-
+import {LogRegCallback} from '../models/log_reg_callback'
+import {Event} from '../models/event'
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: headers });
 
@@ -16,15 +15,6 @@ export class EventService {
 	constructor(private http: Http, private endpoints: Endpoints) {
 		this.eventURL = endpoints.API_GET_EVENTS;
 
-	}
-
-	
-	getEvent(eventID): Observable<Event>{
-		let params: URLSearchParams = new URLSearchParams();
-		params.set('id', eventID);
-		return this.http.get(this.eventURL, {search: params})
-						.map(res => res.json() as Event)
-						.catch(this.handleError);
 	}
 
     /**
