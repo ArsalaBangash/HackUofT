@@ -14,7 +14,7 @@ import { UserInfoPage } from '../models/userInfo';
 import { CurrentUserInfoPage } from '../models/currentUserInfo';
 import { Endpoints } from '../models/endpoints'
 
-
+import { EventsPage } from '../events/events';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
