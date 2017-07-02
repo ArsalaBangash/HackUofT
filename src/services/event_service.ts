@@ -3,8 +3,9 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Endpoints } from '../models/endpoints'
-import {LogRegCallback} from '../models/log_reg_callback'
-import {Event} from '../models/event'
+import { LogRegCallback } from '../models/log_reg_callback'
+import { Event } from '../models/event'
+
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: headers });
 
@@ -17,10 +18,7 @@ export class EventService {
 
 	}
 
-	/**
-     * Makes a get request to the API to return a event using Event ID
-     * @return {Observable<Event[]>} The Observable containing all events
-     */
+	
 	getEvent(eventID): Observable<Event>{
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id', eventID);

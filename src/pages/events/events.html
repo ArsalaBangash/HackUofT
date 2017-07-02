@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-searchbar
+    [(ngModel)]="myInput"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="onInput($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+</ion-header>
+
+
+<ion-content>
+
+<ion-list>
+	<ion-card *ngFor="let item of items">
+    <ion-row>
+      <ion-col>
+        <ion-card-title>Name of Event</ion-card-title>
+        <p>Location of Event</p>
+        <p>Start Date - End Date</p>
+
+      </ion-col>
+
+      <ion-col width-20>
+        <ion-thumbnail>
+          <img src="assets/img/hackathon.jpg">
+        </ion-thumbnail>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-item actions>
+      <button ion-button color="primary" clear item-end icon-left (click)="changeIcon(item)">
+        <ion-icon [name] = "item.iconName"></ion-icon>
+      </button>
+
+      <button ion-button color="primary" clear item-end icon-left>
+        <ion-icon name = "share-alt"></ion-icon>
+      </button>
+      <ion-row>
+        <ion-col>
+        <div ng-app="myApp" ng-controller="myCtrl">
+        <button ion-button color="primary" clear item-end icon-left (click) = "getFriendsList()">
+        <ion-icon name="person"></ion-icon>
+          <p>5 Friends Going </p>
+        </button>
+      </div>
+
+
+
+      </ion-col>
+
+      </ion-row>
+    </ion-item>
+
+	</ion-card>
+</ion-list>
+
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
+
+</ion-content>
