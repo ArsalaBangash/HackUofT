@@ -1,57 +1,40 @@
 <ion-header>
-  <ion-navbar color=primary>
-    <ion-title color=white>Home</ion-title>
-  </ion-navbar>
 </ion-header>
 
 
-<ion-content class="card-background-page">
-  <ion-card>
-        <img src="assets/img/main_nbk_deerfield.jpg"/>
-        <div class="card-title">Welcome!</div>
-  </ion-card>
-  <ion-list>
-     <ion-list-header>
-            You're attending:
-    </ion-list-header>
-    <ion-row>
-        <ion-item>
-          <ion-scroll scrollX="true" direction="x" class="scroll-height">
-            <ion-card class="scroll-item hcard" *ngFor="let event of userEvents">
-              <ion-item>
-                   <img src="assets/img/hackathon.jpg">
-              </ion-item>
-              <ion-row flex-wrap: nowrap>
-                <ion-col >
-                  <h2>{{event.name}}</h2>
-                  <p>{{event.address}}</p>
-                  <p>{{event.start}} - {{event.end}}</p>
-                <ion-item actions>
-                  <button ion-button color="primary" clear item-end icon-left (click)="changeIcon(item)">
-                    <ion-icon name = "md-star"></ion-icon>
-                  </button>
-                </ion-item>
+<ion-content>
+    <h2>Welcome Back {{currentUserName}}</h2>
 
-                </ion-col>
-                </ion-row>
-                
-            </ion-card>
-          </ion-scroll>
+    <ion-item>
+        <h1>Your Events</h1>
+	<ion-scroll scrollX="true" direction="x">
+		<ion-card class="scroll-item" *ngFor="let event of userEvents">
+                <ion-row>
+				<ion-col text-wrap>
+					<ion-card-title>{{event.name}}</ion-card-title>
+					<p>{{event.address}}</p>
+					<p>{{event.start}} - {{event.end}}</p>
+				</ion-col>
+				<ion-col>
+					<img src="assets/img/hackathon.jpg">
+				</ion-col>
+            </ion-row>
+		</ion-card>
+	</ion-scroll>
         </ion-item>
-      </ion-row>
-  <ion-item>
-    <ion-thumbnail item-left>
-      <img src="assets/img/hackathon.jpg">
-    </ion-thumbnail>
-    <h2>Hackthons</h2>
-    <button ion-button clear item-right>View</button>
-  </ion-item>
-  <ion-item>
-    <ion-thumbnail item-left>
-      <img src="assets/img/tech-event.jpg">
-    </ion-thumbnail>
-    <h2>Events</h2>
-    <button ion-button clear item-right [navPush]="eventsPage">View</button>
-  </ion-item>
-</ion-list>
+
+	<ion-item>
+		<ion-thumbnail item-left>
+			<img src="assets/img/hackathon.jpg">
+		</ion-thumbnail>
+		<h2>Hackthons</h2>
+		<button ion-button clear item-right>View</button>
+	</ion-item>
+	<ion-item>
+		<ion-thumbnail item-left>
+			<img src="assets/img/tech-event.jpg">
+		</ion-thumbnail>
+		<h2>Events</h2>
+		<button ion-button clear item-right [navPush]="eventsPage">View</button>
+	</ion-item>
 </ion-content>
