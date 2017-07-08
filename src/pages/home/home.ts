@@ -90,9 +90,11 @@ export class HomePage {
 
 	private getUserEvents(user_id: string) {
 		this.UserService.getUserEvents(user_id)
-			.subscribe((callback: string[]) => this.userEventID = callback,
+			.subscribe(
+			(callback: string[]) => this.userEventID = callback,
 			(error) => console.log(error),
-			() => this.events = this.userEventID.map(event => this.getEvent(event)));
+			() => this.events = this.userEventID.map(event => this.getEvent(event))
+			);
 	}
 
 	private getEvent(event_id: string): Event {

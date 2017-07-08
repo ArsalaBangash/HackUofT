@@ -6,13 +6,13 @@
 
 <ion-content>
 
-	<ion-list>
-		<ion-card *ngFor="let item of items">
+	<ion-list *ngIf="eventsReady">
+		<ion-card *ngFor="let event of events">
 			<ion-row>
 				<ion-col>
-					<ion-card-title>Name of Hackathon</ion-card-title>
-					<p>Location of Hackathon</p>
-					<p>Start Date - End Date</p>
+					<h2>{{event.name}}</h2>
+					<p>{{event.city}}</p>
+					<p>{{formatStart(event.start)}} - {{formatEnd(event.end)}}</p>
 
 				</ion-col>
 
@@ -21,16 +21,11 @@
 						<img src="assets/img/hackathon.jpg">
 					</ion-thumbnail>
 				</ion-col>
-
 			</ion-row>
 
 			<ion-item actions>
-				<button ion-button color="primary" clear item-end icon-left (click)="changeIcon(item)">
-        <ion-icon [name] = "item.iconName"></ion-icon>
-      </button>
-
-				<button ion-button color="primary" clear item-end icon-left>
-        <ion-icon name = "share-alt"></ion-icon>
+				<button ion-button color="primary" clear item-end icon-left (click)="changeStarStatus(event.id)">
+        <ion-icon [name]="checkWhetherStarred(event)"></ion-icon>
       </button>
 				<ion-row>
 					<ion-col>

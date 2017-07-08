@@ -23,7 +23,6 @@ export class EventService {
     getEvent(userID: string): Observable<Event> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id', userID);
-
         return this.http.get(this.eventURL)
 			.map(res => res.json() as Event)
 			.catch(this.handleError);
@@ -39,8 +38,24 @@ export class EventService {
 			.catch(this.handleError);
     }
 
+	getIndexedEvents(start: Number, end: Number): Observable<Event[]> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('startIndex', start.toString());
+		params.set('endIndex', end.toString());
+        return this.http.get(this.eventURL, { search: params })
+			.map(this.extractData)
+			.catch(this.handleError);
+    }
+
     private extractData(res: Response) {
-		return res.json() as Event[];
+		var eventArray = res.json();
+		var events: Event[] = [];
+		console.log(eventArray.length);
+		for (var i = 0; i < eventArray.length; i++) {
+			events.push(eventArray[i] as Event);
+			console.log(typeof(events[i]));
+		}
+		return events;
 	}
 
 	private handleError(error: Response | any) {
