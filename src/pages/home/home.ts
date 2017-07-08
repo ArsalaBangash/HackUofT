@@ -9,7 +9,6 @@ import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
 import { Event } from '../../models/event'
 
-import { EventsPage } from '../events/events';
 import 'rxjs/add/operator/map';
 
 
@@ -28,7 +27,6 @@ export class HomePage {
 	currentUserID: string;
 
 	userEventID: string[];
-	eventsPage = EventsPage;
 
 	events: Event[];
 
