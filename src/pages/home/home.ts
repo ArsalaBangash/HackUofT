@@ -31,7 +31,7 @@ export class HomePage {
 	eventsPage = EventsPage;
 
 	events: Event[];
-	
+
 
 	userEvents = [
 		{
@@ -84,45 +84,21 @@ export class HomePage {
 
 
 		this.storageService.get('currentUser').then((user) => {
-            this.currentUserName = user.name;
-        });
+			this.currentUserName = user.name;
+		});
 	}
 
-
-
 	private getUserEvents(user_id: string) {
-	  this.UserService.getUserEvents(user_id)
-		.subscribe((callback: string[]) => this.userEventID = callback,
-					(error) => console.log(error),
-					() => this.events = this.userEventID.map(event => this.getEvent(event)));
+		this.UserService.getUserEvents(user_id)
+			.subscribe((callback: string[]) => this.userEventID = callback,
+			(error) => console.log(error),
+			() => this.events = this.userEventID.map(event => this.getEvent(event)));
 	}
 
 	private getEvent(event_id: string): Event {
-	  var userEvent: Event;
-	  this.EventService.getEvent(event_id)
-		.subscribe((callback: Event) => console.log(callback));
-	  return userEvent;
-
-
+		var userEvent: Event;
+		this.EventService.getEvent(event_id)
+			.subscribe((callback: Event) => console.log(callback));
+		return userEvent;
 	}
-	
-	public starEvent(event_id: string){
-		this.storageService.get('currentUser').then(
-			(user) => {
-				user.events.push(event_id);
-				console.log("Event ID", event_id)
-				this.storageService.set('currentUser', user);
-				console.log("Updated user", user)
-
-				this.UserService.addEvent(user._id, user).subscribe(
-					(callback: User) => console.log("All done", callback),
-					(error) => console.log(error),
-				);
-			}
-
-		)
-	
-	}
-
-
 }
