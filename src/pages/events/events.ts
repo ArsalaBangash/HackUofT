@@ -64,6 +64,10 @@ export class EventsPage {
       theItem.iconName = "ios-star";
   }
 
+  public starEvent(): void{
+    
+  }
+
 
   doInfinite(infiniteScroll): void {
     // console.log('Begin async operation');

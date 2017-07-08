@@ -16,6 +16,19 @@ export class EventService {
 		this.eventURL = endpoints.API_GET_EVENTS;
 	}
 
+	/**
+     * Makes a get request to the API to return all events
+     * @return {Observable<Event>} The Observable containing all events
+     */
+    getEvent(userID: string): Observable<Event> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', userID);
+
+        return this.http.get(this.eventURL)
+			.map(res => res.json() as Event)
+			.catch(this.handleError);
+    }
+
     /**
      * Makes a get request to the API to return all events
      * @return {Observable<Event[]>} The Observable containing all events

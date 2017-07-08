@@ -9,7 +9,7 @@
         <h1>Your Events</h1>
 	<ion-scroll scrollX="true" direction="x">
 		<ion-card class="scroll-item" *ngFor="let event of userEvents">
-                <ion-row>
+            <ion-row>
 				<ion-col text-wrap>
 					<ion-card-title>{{event.name}}</ion-card-title>
 					<p>{{event.address}}</p>
@@ -18,10 +18,13 @@
 				<ion-col>
 					<img src="assets/img/hackathon.jpg">
 				</ion-col>
+				<button ion-button color="primary" clear item-end icon-left (click)= starEvent(event.id)>
+        			<ion-icon name = "share-alt"></ion-icon>
+      			</button>
             </ion-row>
 		</ion-card>
 	</ion-scroll>
-        </ion-item>
+    </ion-item>
 
 	<ion-item>
 		<ion-thumbnail item-left>

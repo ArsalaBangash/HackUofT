@@ -27,11 +27,15 @@ export class HomePage {
 	currentUserName: string;
 	currentUserID: string;
 
-	userEventID: String[];
+	userEventID: string[];
 	eventsPage = EventsPage;
+
+	events: Event[];
+	
 
 	userEvents = [
 		{
+			id: "1",
 			name: "DeerHunt",
 			city: "Mississauga",
 			country: "Canada",
@@ -44,6 +48,7 @@ export class HomePage {
 			description: "Regular Event"
 		},
 		{
+			id: "2",
 			name: "NodeSchools",
 			city: "Toronto",
 			country: "Canada",
@@ -56,6 +61,7 @@ export class HomePage {
 			description: "Regular Event"
 		},
 		{
+			id: "3",
 			name: "Intro to EMACS Workshop",
 			city: "Mississauga",
 			country: "Canada",
@@ -83,23 +89,40 @@ export class HomePage {
 	}
 
 
-	/*
+
 	private getUserEvents(user_id: string) {
 	  this.UserService.getUserEvents(user_id)
-		.subscribe((callback: String[]) => this.userEventID = callback,
+		.subscribe((callback: string[]) => this.userEventID = callback,
 					(error) => console.log(error),
-					() => this.userEvents = this.userEventID.map(event => this.getEvent(event)));
+					() => this.events = this.userEventID.map(event => this.getEvent(event)));
 	}
 
-	private getEvent(event_id: String): Event {
+	private getEvent(event_id: string): Event {
 	  var userEvent: Event;
 	  this.EventService.getEvent(event_id)
-		.subscribe((callback: Event) => userEvent = callback);
+		.subscribe((callback: Event) => console.log(callback));
 	  return userEvent;
 
 
 	}
-	*/
+	
+	public starEvent(event_id: string){
+		this.storageService.get('currentUser').then(
+			(user) => {
+				user.events.push(event_id);
+				console.log("Event ID", event_id)
+				this.storageService.set('currentUser', user);
+				console.log("Updated user", user)
+
+				this.UserService.addEvent(user._id, user).subscribe(
+					(callback: User) => console.log("All done", callback),
+					(error) => console.log(error),
+				);
+			}
+
+		)
+	
+	}
 
 
 }
