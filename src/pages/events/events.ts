@@ -1,6 +1,16 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
+import { Http } from '@angular/http';
+import { Endpoints } from '../../models/endpoints'
+import { UserService } from '../../services/user_service'
+import { EventService } from '../../services/event_service'
+import { User } from '../../models/user'
+import { Event } from '../../models/event'
+
+import 'rxjs/add/operator/map';
 
 
 @Component({
@@ -12,6 +22,7 @@ export class EventsPage {
   Favorite: string = "home"
   items = [
     {
+      id: "1",
       name: "Event1",
       city: "Mississauga",
       country: "Canada",
@@ -24,6 +35,7 @@ export class EventsPage {
       description: "Regular Event"
     },
     {
+      id: "2",
       name: "Event2",
       city: "Toronto",
       country: "Canada",
@@ -36,6 +48,7 @@ export class EventsPage {
       description: "Regular Event"
     },
     {
+      id: "3",
       name: "Event3",
       city: "Mississauga",
       country: "Canada",
@@ -49,40 +62,38 @@ export class EventsPage {
     }
   ];
 
+  storageService: Storage;
+	EventService: EventService;
+	UserService: UserService;
 
-  constructor( public platform: Platform,
-    public actionsheetCtrl: ActionSheetController) {
+  constructor(public platform: Platform,
+    public actionsheetCtrl: ActionSheetController, private http: Http,
+		private endpoints: Endpoints, private storage: Storage) {
+
+      this.storageService = storage;
+		  this.EventService = new EventService(http, endpoints);
+		  this.UserService = new UserService(http, endpoints);
 
   }
 
+  public starEvent(event_id: string) {
+    this.storageService.get('currentUser').then(
+      (user) => {
+        user.events.push(event_id);
+        console.log("Event ID", event_id)
+        this.storageService.set('currentUser', user);
+        console.log("Updated user", user)
 
-
-  public changeIcon(theItem): void {
-    if(theItem.iconName == "ios-star")
-      theItem.iconName = "ios-star-outline";
-    else
-      theItem.iconName = "ios-star";
+        console.log(user._id);
+        this.UserService.addEvent(user._id, user).subscribe(
+          (callback: User) => console.log("All done", callback),
+          (error) => console.log(error),
+        );
+      }
+    );
   }
 
-  public starEvent(): void{
-    
-  }
 
-
-  doInfinite(infiniteScroll): void {
-    // console.log('Begin async operation');
-    //
-    // setTimeout(() => {
-    //   for (let i = 0; i < 30; i++) {
-    //     this.items.push( {
-    //     "iconName": "ios-star-outline",
-    //   } );
-    //   }
-    //
-    //   console.log('Async operation has ended');
-    //   infiniteScroll.complete();
-    // }, 10);
-  }
   getFriendsList() {
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Friends Going',

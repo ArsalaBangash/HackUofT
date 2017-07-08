@@ -29,12 +29,8 @@
     </ion-row>
 
     <ion-item actions>
-      <button ion-button color="primary" clear item-end icon-left (click)="changeIcon(item)">
-        <ion-icon [name] = "item.iconName"></ion-icon>
-      </button>
-
-      <button ion-button color="primary" clear item-end icon-left>
-        <ion-icon name = "share-alt"></ion-icon>
+      <button ion-button color="primary" clear item-end icon-left (click)="starEvent(item.id)">
+        <ion-icon name = "ios-star-outline"></ion-icon>
       </button>
       <ion-row>
         <ion-col>
@@ -54,9 +50,5 @@
 
 	</ion-card>
 </ion-list>
-
-<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-   <ion-infinite-scroll-content></ion-infinite-scroll-content>
- </ion-infinite-scroll>
 
 </ion-content>

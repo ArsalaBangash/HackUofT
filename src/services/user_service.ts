@@ -50,9 +50,9 @@ export class UserService {
 	 */
 	addEvent(userID: string, user: User): Observable<User>{
 		// let url = `${this.postEventURL}/${userID}`;
-		let url = `${this.postEventURL}/${userID}`;
-		console.log("this is the url", url);
-		return this.http.put(url, user, this.options)
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', userID);
+		return this.http.put(this.postEventURL, user, {search:params , headers: this.headers})
 					    .map(res => res.json() as User)
 						.catch(this.handleError)
 	}
