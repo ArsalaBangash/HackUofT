@@ -27,7 +27,8 @@ export class SearchPage {
 		private endpoints: Endpoints, private storage: Storage) {
 		this.userService = new UserService(http, endpoints);
 		this.eventService = new EventService(http, endpoints);
-		this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 3)
+		//Adds the first three events to the events array.
+		this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
 			.subscribe(
 			events => {
                 this.events = events;
@@ -37,17 +38,28 @@ export class SearchPage {
 			);
 	}
 
-
-	public formatStart(startDate: string) {
+	/**
+	 * Formats the start date for the event card
+	 */
+	public formatStart(startDate: string): string {
 		return (new Date(startDate)).toLocaleString('en-us');
 	}
 
+	/**
+	 * Formats the end date for the event card
+	 */
 	public formatEnd(endDate: string) {
 		return (new Date(endDate)).toLocaleString('en-us');
 	}
 
-
-	public checkWhetherStarred(event) {
+	/**
+	 * Returns the name of the star icon to display depending upon
+	 * whether the particular event is within the current user's list
+	 * of starred events.
+	 * @param  {Event}  event The event to be checked
+	 * @return {string} The name of the star icon to display
+	 */
+	public checkWhetherStarred(event: Event): string {
 		/*TODO: This isn't correct. There should be a call to the current user's
 		events list to see if the event is actually there or not and depending
 		on that, set the star icon
@@ -55,10 +67,14 @@ export class SearchPage {
 		return "ios-star-outline";
 	}
 
-	doInfinite(infiniteScroll): void {
+	/**
+	 * Fetches the next 5 events from the server once the user navigates to the
+	 * end of the screen
+	 */
+	doInfinite(infiniteScroll) {
 		console.log('Begin async operation');
 		setTimeout(() => {
-			this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 3)
+			this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
 				.subscribe(
 				events => {
 					Array.prototype.push.apply(this.events, events);
@@ -70,9 +86,6 @@ export class SearchPage {
 		}, 10);
 	}
 
-
-
-
 	getFriendsList() {
 		let actionSheet = this.actionsheetCtrl.create({
 			title: 'Friends Going',
@@ -82,6 +95,12 @@ export class SearchPage {
 		actionSheet.present();
 	}
 
+	/**
+	 * Adds or removes a particular event from the user's list of events. The
+	 * star icon is also changed to reflect the addition or removal of the
+	 * event from the list of the user's starred events
+	 * @param  {string} event_id The event to be added or removed
+	 */
 	public changeStarStatus(event_id: string) {
 		/*TODO: This should check whether it's already starred or not and depending
 		on that, it should add or remove the event ID
