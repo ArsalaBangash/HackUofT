@@ -9,7 +9,6 @@ import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
 import { Event } from '../../models/event'
 
-import { EventsPage } from '../events/events';
 import 'rxjs/add/operator/map';
 
 
@@ -27,11 +26,14 @@ export class HomePage {
 	currentUserName: string;
 	currentUserID: string;
 
-	userEventID: String[];
-	eventsPage = EventsPage;
+	userEventID: string[];
+
+	events: Event[];
+
 
 	userEvents = [
 		{
+			id: "1",
 			name: "DeerHunt",
 			city: "Mississauga",
 			country: "Canada",
@@ -44,6 +46,7 @@ export class HomePage {
 			description: "Regular Event"
 		},
 		{
+			id: "2",
 			name: "NodeSchools",
 			city: "Toronto",
 			country: "Canada",
@@ -56,6 +59,7 @@ export class HomePage {
 			description: "Regular Event"
 		},
 		{
+			id: "3",
 			name: "Intro to EMACS Workshop",
 			city: "Mississauga",
 			country: "Canada",
@@ -78,28 +82,23 @@ export class HomePage {
 
 
 		this.storageService.get('currentUser').then((user) => {
-            this.currentUserName = user.name;
-        });
+			this.currentUserName = user.name;
+		});
 	}
 
-
-	/*
 	private getUserEvents(user_id: string) {
-	  this.UserService.getUserEvents(user_id)
-		.subscribe((callback: String[]) => this.userEventID = callback,
-					(error) => console.log(error),
-					() => this.userEvents = this.userEventID.map(event => this.getEvent(event)));
+		this.UserService.getUserEvents(user_id)
+			.subscribe(
+			(callback: string[]) => this.userEventID = callback,
+			(error) => console.log(error),
+			() => this.events = this.userEventID.map(event => this.getEvent(event))
+			);
 	}
 
-	private getEvent(event_id: String): Event {
-	  var userEvent: Event;
-	  this.EventService.getEvent(event_id)
-		.subscribe((callback: Event) => userEvent = callback);
-	  return userEvent;
-
-
+	private getEvent(event_id: string): Event {
+		var userEvent: Event;
+		this.EventService.getEvent(event_id)
+			.subscribe((callback: Event) => console.log(callback));
+		return userEvent;
 	}
-	*/
-
-
 }

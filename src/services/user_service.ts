@@ -4,29 +4,68 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Endpoints } from '../models/endpoints'
-import {Event} from '../models/event'
+import { Event } from '../models/event'
+import { User } from '../models/user'
 
-let headers = new Headers({ 'Content-Type': 'application/json' });
-let options = new RequestOptions({ headers: headers });
 
 export class UserService {
-	eventURL: string;
+	getEventURL: string;
 	followersURL: string;
 
+	getUserURL: string;
+	postEventURL: string;
+
+	options: RequestOptions;
+	headers: Headers;
+
 	constructor(private http: Http, private endpoints: Endpoints) {
-		// this.eventURL = endpoints.API_GET_USER_EVENTS;
+		this.getEventURL = endpoints.API_GET_USER_EVENTS;
 		this.followersURL = endpoints.API_GET_USER_FOLLOWER;
+
+		this.getUserURL = endpoints.API_GET_USER_BY_ID;
+		this.postEventURL = endpoints.API_POST_USER_EVENT;
+		
+		this.headers = new Headers({ 'Content-Type': 'application/json' });
+		this.options = new RequestOptions({ headers: this.headers });
+	}
+
+	/**
+     * * Makes a get request to the API to return a user
+     * @param  { string } userID [The user in question]
+     * @return { Observable<User> } The Observable containing the requested User
+     */
+	getUser(userID: string): Observable<User>{
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', userID);
+		return this.http.get(this.getUserURL, { search: params})
+						.map(res => res.json() as User)
+						.catch(this.handleError)
+	}
+
+	/**
+	 * * Makes a put request to the API to update a user events list
+	 * @param {string} userID [The user in question]
+	 * @param {User} user [The updated user object]
+	 * @return {Observable<User>} An updated user object
+	 */
+	addEvent(userID: string, user: User): Observable<User>{
+		// let url = `${this.postEventURL}/${userID}`;
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', userID);
+		return this.http.put(this.postEventURL, user, {search:params , headers: this.headers})
+					    .map(res => res.json() as User)
+						.catch(this.handleError)
 	}
 
     /**
      * * Makes a get request to the API to return all user events
-     * @param  {string} userID [The user in question]
-     * @return {Observable<String[]>} The Observable containing all event IDs
+     * @param  { string } userID [The user in question]
+     * @return { Observable<String[]> } The Observable containing all event IDs
      */
 	getUserEvents(userID: string): Observable<String[]> {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('id', userID);
-		return this.http.get(this.eventURL, { search: params })
+		return this.http.get(this.getEventURL, { search: params })
 			.map(this.extractData)
             .catch(this.handleError)
     }

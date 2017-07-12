@@ -55,7 +55,8 @@ export class LoginPage {
 			this.logRegService.loginUser(this.inputEmail, this.inputPassword)
 				.subscribe(
                 (callback: LogRegCallback) => this.handleLoginCallback(callback),
-				error => this.showAlert(this.loginErrorTitle, this.loginFailedMessage));
+				error => this.showAlert(this.loginErrorTitle, this.loginFailedMessage)
+			);
 		}
 
 
