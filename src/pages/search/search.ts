@@ -21,6 +21,7 @@ export class SearchPage {
 	userService: UserService;
     eventsReady: boolean = false;
 	eventsDisplayed: number = 0;
+	currentUser: User;
 
 	constructor(public platform: Platform,
 		public actionsheetCtrl: ActionSheetController, private http: Http,
@@ -36,6 +37,9 @@ export class SearchPage {
 				this.eventsDisplayed += events.length;
             }
 			);
+		this.storage.get('currentUser').then((user) => {
+			this.currentUser = user;
+		});
 	}
 
 	/**
@@ -60,10 +64,9 @@ export class SearchPage {
 	 * @return {string} The name of the star icon to display
 	 */
 	public checkWhetherStarred(event: Event): string {
-		/*TODO: This isn't correct. There should be a call to the current user's
-		events list to see if the event is actually there or not and depending
-		on that, set the star icon
-		*/
+		if (this.currentUser.events.indexOf(event._id) > -1) {
+			return "ios-star"
+		}
 		return "ios-star-outline";
 	}
 
@@ -99,25 +102,34 @@ export class SearchPage {
 	 * Adds or removes a particular event from the user's list of events. The
 	 * star icon is also changed to reflect the addition or removal of the
 	 * event from the list of the user's starred events
-	 * @param  {string} event_id The event to be added or removed
+	 * @param  {string} eventID The event to be added or removed
 	 */
-	public changeStarStatus(event_id: string) {
-		/*TODO: This should check whether it's already starred or not and depending
-		on that, it should add or remove the event ID
-		*/
-		this.storage.get('currentUser').then(
-			(user) => {
-				user.events.push(event_id);
-				//   console.log("Event ID", event_id)
-				this.storage.set('currentUser', user);
-				//   console.log("Updated user", user)
-				//   console.log(user._id);
-				this.userService.addEvent(user._id, user).subscribe(
-					(callback: User) => console.log("All done", callback),
-					(error) => console.log(error),
-				);
-			}
-		);
+	public changeStarStatus(eventID: string) {
+		let eventIndex = this.currentUser.events.indexOf(eventID);
+		if (eventIndex > -1) {
+			this.unstarEvent(eventID, eventIndex);
+		} else {
+			this.starEvent(eventID, eventIndex);
+		}
     }
+
+	public starEvent(eventID: string, eventIndex: number) {
+		console.log(this.currentUser.events);
+		console.log("user " + this.currentUser._id + "starring " + eventID);
+		this.currentUser.events.push(eventID);
+		console.log(this.currentUser.events);
+		this.storage.set('currentUser', this.currentUser);
+		this.userService.updateUser(this.currentUser).subscribe();
+		this.eventService.addUser(eventID, this.currentUser._id).subscribe();
+	}
+
+	public unstarEvent(eventID: string, eventIndex: number) {
+		console.log(this.currentUser.events)
+		console.log("user " + this.currentUser._id + "UNstarring " + eventID)
+		this.currentUser.events.splice(eventIndex, 1)
+		this.storage.set('currentUser', this.currentUser);
+		this.userService.updateUser(this.currentUser).subscribe();
+		this.eventService.removeUser(eventID, this.currentUser._id).subscribe();
+	}
 
 }

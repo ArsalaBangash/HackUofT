@@ -11,9 +11,10 @@ import { User } from '../models/user'
 export class UserService {
 	getEventURL: string;
 	followersURL: string;
-
 	getUserURL: string;
 	postEventURL: string;
+
+	updateUserURL: string;
 
 	options: RequestOptions;
 	headers: Headers;
@@ -24,7 +25,10 @@ export class UserService {
 
 		this.getUserURL = endpoints.API_GET_USER_BY_ID;
 		this.postEventURL = endpoints.API_POST_USER_EVENT;
-		
+
+		this.updateUserURL = endpoints.API_UPDATE_USER;
+
+
 		this.headers = new Headers({ 'Content-Type': 'application/json' });
 		this.options = new RequestOptions({ headers: this.headers });
 	}
@@ -82,6 +86,14 @@ export class UserService {
 			.map(this.extractData)
             .catch(this.handleError)
     }
+
+	updateUser(updatedUser: User): Observable<string> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', updatedUser._id);
+		return this.http.put(this.updateUserURL, updatedUser, { search: params})
+			.map(res => res.text())
+			.catch(this.handleError)
+	}
 
     private extractData(res: Response) {
 		return res.json() as String[];

@@ -10,10 +10,15 @@ let options = new RequestOptions({ headers: headers });
 
 
 export class EventService {
+
 	eventURL: string;
+	addUserURL: string;
+	removeUserURL: string;
 
 	constructor(private http: Http, private endpoints: Endpoints) {
 		this.eventURL = endpoints.API_GET_EVENTS;
+		this.addUserURL = endpoints.API_ADD_EVENT_USERS;
+		this.removeUserURL = endpoints.API_REMOVE_EVENT_USERS;
 	}
 
 	/**
@@ -47,13 +52,25 @@ export class EventService {
 			.catch(this.handleError);
     }
 
+	addUser(eventID: string, userID: string) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('eventID', eventID);
+		return this.http.put(this.addUserURL, {userID: userID}, { search: params })
+	}
+
+	removeUser(eventID: string, userID: string) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('eventID', eventID);
+		return this.http.put(this.removeUserURL,{userID: userID}, { search: params })
+	}
+
     private extractData(res: Response) {
 		var eventArray = res.json();
 		var events: Event[] = [];
 		console.log(eventArray.length);
 		for (var i = 0; i < eventArray.length; i++) {
 			events.push(eventArray[i] as Event);
-			console.log(typeof(events[i]));
+			console.log(typeof (events[i]));
 		}
 		return events;
 	}
