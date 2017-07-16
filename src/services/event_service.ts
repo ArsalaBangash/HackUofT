@@ -14,8 +14,10 @@ export class EventService {
 	eventURL: string;
 	addUserURL: string;
 	removeUserURL: string;
+	userEventsURL: string;
 
 	constructor(private http: Http, private endpoints: Endpoints) {
+		this.userEventsURL = endpoints.API_GET_USER_EVENTS;
 		this.eventURL = endpoints.API_GET_EVENTS;
 		this.addUserURL = endpoints.API_ADD_EVENT_USERS;
 		this.removeUserURL = endpoints.API_REMOVE_EVENT_USERS;
@@ -41,6 +43,20 @@ export class EventService {
         return this.http.get(this.eventURL)
 			.map(this.extractData)
 			.catch(this.handleError);
+    }
+
+	/**
+     * * Makes a get request to the API to return all user events
+     * @param  { string } userID [The user in question]
+     * @return { Observable<Event[]> } The Observable containing all event IDs
+     */
+	getUserEvents(userID: string): Observable<Event[]> {
+		console.log("Getting user events");
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', userID);
+		return this.http.get(this.userEventsURL, { search: params })
+			.map(this.extractData)
+            .catch(this.handleError)
     }
 
 	getIndexedEvents(start: Number, end: Number): Observable<Event[]> {
@@ -72,6 +88,7 @@ export class EventService {
 			events.push(eventArray[i] as Event);
 			console.log(typeof (events[i]));
 		}
+		console.log(events);
 		return events;
 	}
 

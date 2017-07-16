@@ -20,7 +20,6 @@ export class UserService {
 	headers: Headers;
 
 	constructor(private http: Http, private endpoints: Endpoints) {
-		this.getEventURL = endpoints.API_GET_USER_EVENTS;
 		this.followersURL = endpoints.API_GET_USER_FOLLOWER;
 
 		this.getUserURL = endpoints.API_GET_USER_BY_ID;
@@ -60,19 +59,6 @@ export class UserService {
 					    .map(res => res.json() as User)
 						.catch(this.handleError)
 	}
-
-    /**
-     * * Makes a get request to the API to return all user events
-     * @param  { string } userID [The user in question]
-     * @return { Observable<String[]> } The Observable containing all event IDs
-     */
-	getUserEvents(userID: string): Observable<String[]> {
-		let params: URLSearchParams = new URLSearchParams();
-		params.set('id', userID);
-		return this.http.get(this.getEventURL, { search: params })
-			.map(this.extractData)
-            .catch(this.handleError)
-    }
 
 	/**
 	 * * Makes a get request to the API to return all user followers
