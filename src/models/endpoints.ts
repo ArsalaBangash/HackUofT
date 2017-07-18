@@ -6,10 +6,8 @@ export class Endpoints {
   readonly API_BASENAME = 'https://edmondumolu.me:4001';
   readonly API_LOGIN = "https://edmondumolu.me:4001/users/login/";
   readonly API_REGISTER = "https://edmondumolu.me:4001/users";
-
+  readonly API_UPDATE_USER = "https://edmondumolu.me:4001/users";
   readonly API_POST_USER_EVENT = "https://edmondumolu.me:4001/users/events/add";
-
-  // I have a question here 
   readonly API_GET_USER_BY_ID = "https://edmondumolu.me:4001/users/find";
   readonly API_GET_USER_EVENTS = "https://edmondumolu.me:4001/users/events";
   readonly API_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following/add";
@@ -19,8 +17,8 @@ export class Endpoints {
   readonly API_DELETE_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following/delete";
   readonly API_DELETE_USER_FOLLOWER =  "https://edmondumolu.me:4001/users/followers/delete";
   readonly API_GET_EVENTS = "https://edmondumolu.me:4001/events";
-
-
+  readonly API_ADD_EVENT_USERS = "https://edmondumolu.me:4001/events/users/add";
+  readonly API_REMOVE_EVENT_USERS = "https://edmondumolu.me:4001/events/users/delete";
   // comeback to make sure
   readonly API_GET_EVENT_BY_ID = "https://edmondumolu.me:4001/events/id";
 }

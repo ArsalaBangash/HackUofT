@@ -11,20 +11,23 @@ import { User } from '../models/user'
 export class UserService {
 	getEventURL: string;
 	followersURL: string;
-
 	getUserURL: string;
 	postEventURL: string;
+
+	updateUserURL: string;
 
 	options: RequestOptions;
 	headers: Headers;
 
 	constructor(private http: Http, private endpoints: Endpoints) {
-		this.getEventURL = endpoints.API_GET_USER_EVENTS;
 		this.followersURL = endpoints.API_GET_USER_FOLLOWER;
 
 		this.getUserURL = endpoints.API_GET_USER_BY_ID;
 		this.postEventURL = endpoints.API_POST_USER_EVENT;
-		
+
+		this.updateUserURL = endpoints.API_UPDATE_USER;
+
+
 		this.headers = new Headers({ 'Content-Type': 'application/json' });
 		this.options = new RequestOptions({ headers: this.headers });
 	}
@@ -57,19 +60,6 @@ export class UserService {
 						.catch(this.handleError)
 	}
 
-    /**
-     * * Makes a get request to the API to return all user events
-     * @param  { string } userID [The user in question]
-     * @return { Observable<String[]> } The Observable containing all event IDs
-     */
-	getUserEvents(userID: string): Observable<String[]> {
-		let params: URLSearchParams = new URLSearchParams();
-		params.set('id', userID);
-		return this.http.get(this.getEventURL, { search: params })
-			.map(this.extractData)
-            .catch(this.handleError)
-    }
-
 	/**
 	 * * Makes a get request to the API to return all user followers
 	 * @param  {string} userID [The user in question]
@@ -82,6 +72,14 @@ export class UserService {
 			.map(this.extractData)
             .catch(this.handleError)
     }
+
+	updateUser(updatedUser: User): Observable<string> {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('id', updatedUser._id);
+		return this.http.put(this.updateUserURL, updatedUser, { search: params})
+			.map(res => res.text())
+			.catch(this.handleError)
+	}
 
     private extractData(res: Response) {
 		return res.json() as String[];

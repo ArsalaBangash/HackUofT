@@ -18,87 +18,32 @@ import 'rxjs/add/operator/map';
 })
 
 export class HomePage {
-	storageService: Storage;
-	EventService: EventService;
-	UserService: UserService;
-
+	eventService: EventService;
+	userService: UserService;
 	currentUser: User;
 	currentUserName: string;
 	currentUserID: string;
+    events: Event[];
+	eventsReady: boolean = false;
 
-	userEventID: string[];
-
-	events: Event[];
-
-
-	userEvents = [
-		{
-			id: "1",
-			name: "DeerHunt",
-			city: "Mississauga",
-			country: "Canada",
-			address: "3359 Mississauga Rd, Mississauga, Ontario",
-			start: "July 2nd",
-			end: "July 2nd",
-			picture: "no pic",
-			links: [],
-			type: "meetup",
-			description: "Regular Event"
-		},
-		{
-			id: "2",
-			name: "NodeSchools",
-			city: "Toronto",
-			country: "Canada",
-			address: "459 Spadina Avenue, Toronto, Ontario",
-			start: "July 3nd",
-			end: "July 3nd",
-			picture: "no pic",
-			links: [],
-			type: "meetup",
-			description: "Regular Event"
-		},
-		{
-			id: "3",
-			name: "Intro to EMACS Workshop",
-			city: "Mississauga",
-			country: "Canada",
-			address: "3359 Mississauga Rd, Mississauga, Ontario",
-			start: "July 3nd",
-			end: "July 3nd",
-			picture: "no pic",
-			links: [],
-			type: "meetup",
-			description: "Regular Event"
-		}
-	];
 
 	constructor(public navCtrl: NavController, private http: Http,
 		private endpoints: Endpoints, private storage: Storage) {
 
-		this.storageService = storage;
-		this.EventService = new EventService(http, endpoints);
-		this.UserService = new UserService(http, endpoints);
-
-
-		this.storageService.get('currentUser').then((user) => {
+		this.eventService = new EventService(http, endpoints);
+		this.userService = new UserService(http, endpoints);
+		storage.get('currentUser').then((user) => {
+			this.currentUser = user;
 			this.currentUserName = user.name;
+			this.eventService.getUserEvents(this.currentUser._id).subscribe(
+				events => {
+					this.events = events;
+					console.log(this.events);
+				}
+			)
 		});
+		this.eventsReady = true;
+
 	}
 
-	private getUserEvents(user_id: string) {
-		this.UserService.getUserEvents(user_id)
-			.subscribe(
-			(callback: string[]) => this.userEventID = callback,
-			(error) => console.log(error),
-			() => this.events = this.userEventID.map(event => this.getEvent(event))
-			);
-	}
-
-	private getEvent(event_id: string): Event {
-		var userEvent: Event;
-		this.EventService.getEvent(event_id)
-			.subscribe((callback: Event) => console.log(callback));
-		return userEvent;
-	}
 }
