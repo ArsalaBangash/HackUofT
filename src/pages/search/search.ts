@@ -19,6 +19,7 @@ export class SearchPage {
     events: Event[];
 	eventService: EventService;
 	userService: UserService;
+	storageService: Storage;
     eventsReady: boolean = false;
 	eventsDisplayed: number = 0;
 	currentUser: User;
@@ -29,6 +30,7 @@ export class SearchPage {
 		this.userService = new UserService(http, endpoints);
 		this.eventService = new EventService(http, endpoints);
 		//Adds the first three events to the events array.
+		this.storageService = storage
 		this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
 			.subscribe(
 			events => {
@@ -130,6 +132,16 @@ export class SearchPage {
 		this.storage.set('currentUser', this.currentUser);
 		this.userService.updateUser(this.currentUser).subscribe();
 		this.eventService.removeUser(eventID, this.currentUser._id).subscribe();
+	}
+
+	/**
+	*Computes the number of the followers of a user that are attending
+	*a particular event. The number will be displayed in each event card
+	* @param  {Event}  event The event to be checked for which of the followers are attending
+	* @return {number} the number of followers that are attending the event
+	**/
+	public computeFriendsGoing(event:Event): number{
+		//Have to still complete
 	}
 
 }

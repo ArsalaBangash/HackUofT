@@ -32,7 +32,7 @@
 						<div ng-app="myApp" ng-controller="myCtrl">
 							<button ion-button color="primary" clear item-end icon-left (click)="getFriendsList()">
         <ion-icon name="person"></ion-icon>
-          <p>5 Friends Going </p>
+          <p>{{computeFriendsGoing(event)}} Friends Going </p>
         </button>
 						</div>
 					</ion-col>

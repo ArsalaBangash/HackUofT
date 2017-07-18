@@ -12,6 +12,7 @@ export class Event {
 		public links: string[],
 		public type: string,
 		public description: string,
+		public usersGoing: string[],
     ) {
 	}
 
