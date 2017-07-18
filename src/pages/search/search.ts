@@ -142,6 +142,25 @@ export class SearchPage {
 	**/
 	public computeFriendsGoing(event:Event): number{
 		//Have to still complete
+		//I can use the filter function somehow
+		//so that
+		/** Here is the basic algorithm without the api calls
+			var i = 0;
+			var usersGoing = event.usersGoing;
+			//make an api call to get the current user
+			//for now I will just assume I have a list
+			var userFollowings = user.followings
+			var count = 0;
+			for(i; i<usersGoing.length; ++i){
+				var index = user.followings.indexOf(userGoing[i])
+				if(index > -1){
+					count++;
+				}
+		  }
+
+			return count;
+		**/
+
 	}
 
 }
