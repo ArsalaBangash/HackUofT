@@ -23,6 +23,8 @@ export class SearchPage {
     eventsReady: boolean = false;
 	eventsDisplayed: number = 0;
 	currentUser: User;
+	followersGoingDict = {};
+
 
 	constructor(public platform: Platform,
 		public actionsheetCtrl: ActionSheetController, private http: Http,
@@ -30,7 +32,7 @@ export class SearchPage {
 		this.userService = new UserService(http, endpoints);
 		this.eventService = new EventService(http, endpoints);
 		//Adds the first three events to the events array.
-		this.storageService = storage
+		this.storageService = storage;
 		this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
 			.subscribe(
 			events => {
@@ -91,11 +93,19 @@ export class SearchPage {
 		}, 10);
 	}
 
-	getFriendsList() {
+	getFriendsList(eventID: string) {
+		//var arrayOfFollowers = this.followersGoingDict[eventID];
+		var arrayOfFollowers = this.followersGoingDict[eventID];
+		var buttonsArray = [];
+		var j = 0;
+		for(j; j<arrayOfFollowers.length; j++) {
+			buttonsArray.push({text: arrayOfFollowers[j],})
+		}
+
 		let actionSheet = this.actionsheetCtrl.create({
 			title: 'Friends Going',
 			cssClass: 'action-sheets-basic-page',
-			buttons: [{ text: 'Arsala', }, { text: 'Bola', }]
+			buttons: buttonsArray
 		});
 		actionSheet.present();
 	}
@@ -140,26 +150,31 @@ export class SearchPage {
 	* @param  {Event}  event The event to be checked for which of the followers are attending
 	* @return {number} the number of followers that are attending the event
 	**/
-	public computeFriendsGoing(event:Event): number{
-		//Have to still complete
-		//I can use the filter function somehow
-		//so that
-		/** Here is the basic algorithm without the api calls
+	public computeFriendsGoing(eventName: string, eventID:string, event:Event): number{
 			var i = 0;
 			var usersGoing = event.usersGoing;
+
 			//make an api call to get the current user
 			//for now I will just assume I have a list
-			var userFollowings = user.followings
+
+			var userFollowings = this.currentUser.following
 			var count = 0;
+
+			//check if the key exists in the dictionary
+			if((eventID) in this.followersGoingDict){
+				this.followersGoingDict[eventID] = [];
+		  }
+
 			for(i; i<usersGoing.length; ++i){
-				var index = user.followings.indexOf(userGoing[i])
+				var index = this.currentUser.following.indexOf(usersGoing[i]);
 				if(index > -1){
+					this.followersGoingDict[eventID].push(usersGoing[i]);
 					count++;
 				}
 		  }
 
 			return count;
-		**/
+
 
 	}
 
