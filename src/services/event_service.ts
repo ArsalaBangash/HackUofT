@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Endpoints } from '../models/endpoints'
 import {LogRegCallback} from '../models/log_reg_callback'
 import {Event} from '../models/event'
+import {UserInfo} from '../models/UserInfo2'
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: headers });
 
@@ -68,16 +69,16 @@ export class EventService {
 			.catch(this.handleError);
     }
 
-	addUser(eventID: string, userID: string) {
+	addUser(eventID: string, userInfo: UserInfo) {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('eventID', eventID);
-		return this.http.put(this.addUserURL, {userID: userID}, { search: params })
+		return this.http.put(this.addUserURL, {userInfo: userInfo}, { search: params })
 	}
 
-	removeUser(eventID: string, userID: string) {
+	removeUser(eventID: string, userInfo: UserInfo) {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('eventID', eventID);
-		return this.http.put(this.removeUserURL,{userID: userID}, { search: params })
+		return this.http.put(this.removeUserURL,{userInfo: userInfo}, { search: params })
 	}
 
     private extractData(res: Response) {

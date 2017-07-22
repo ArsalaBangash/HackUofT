@@ -7,7 +7,10 @@ import { UserService } from '../../services/user_service'
 import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
 import { Event } from '../../models/event'
+import { UserInfo } from '../../models/UserInfo2'
+import { Utils } from '../../services/utils'
 import { Storage } from '@ionic/storage';
+
 
 
 
@@ -96,6 +99,7 @@ export class SearchPage {
 	getFriendsList(eventID: string) {
 		//var arrayOfFollowers = this.followersGoingDict[eventID];
 		var arrayOfFollowers = this.followersGoingDict[eventID];
+
 		var buttonsArray = [];
 		var j = 0;
 		for(j; j<arrayOfFollowers.length; j++) {
@@ -127,22 +131,31 @@ export class SearchPage {
 
 	public starEvent(eventID: string, eventIndex: number) {
 		console.log(this.currentUser.events);
-		console.log("user " + this.currentUser._id + "starring " + eventID);
+		console.log("user " + this.currentUser.userInfo['_id'] + "starring " + eventID);
 		this.currentUser.events.push(eventID);
 		console.log(this.currentUser.events);
 		this.storage.set('currentUser', this.currentUser);
 		this.userService.updateUser(this.currentUser).subscribe();
-		this.eventService.addUser(eventID, this.currentUser._id).subscribe();
+		this.eventService.addUser(eventID, this.currentUser.userInfo).subscribe();
 	}
 
 	public unstarEvent(eventID: string, eventIndex: number) {
 		console.log(this.currentUser.events)
-		console.log("user " + this.currentUser._id + "UNstarring " + eventID)
+		console.log("user " + this.currentUser.userInfo['_id'] + "UNstarring " + eventID)
 		this.currentUser.events.splice(eventIndex, 1)
 		this.storage.set('currentUser', this.currentUser);
 		this.userService.updateUser(this.currentUser).subscribe();
-		this.eventService.removeUser(eventID, this.currentUser._id).subscribe();
+		this.eventService.removeUser(eventID, this.currentUser.userInfo).subscribe();
 	}
+
+	// findWithAttr(array: UserInfo[], attr: string, value: string): number{
+	// 	for(var i = 0; i < array.length; i += 1) {
+	// 			if(array[i][attr] === value) {
+	// 					return i;
+	// 			}
+	// 	}
+	// 	return -1;
+	// }
 
 	/**
 	*Computes the number of the followers of a user that are attending
@@ -150,7 +163,7 @@ export class SearchPage {
 	* @param  {Event}  event The event to be checked for which of the followers are attending
 	* @return {number} the number of followers that are attending the event
 	**/
-	public computeFriendsGoing(eventName: string, eventID:string, event:Event): number{
+	public computeFriendsGoing(event:Event): number{
 			var i = 0;
 			var usersGoing = event.usersGoing;
 
@@ -160,18 +173,23 @@ export class SearchPage {
 			var userFollowings = this.currentUser.following
 			var count = 0;
 
-			//check if the key exists in the dictionary
-			if((eventID) in this.followersGoingDict){
-				this.followersGoingDict[eventID] = [];
-		  }
 
-			for(i; i<usersGoing.length; ++i){
-				var index = this.currentUser.following.indexOf(usersGoing[i]);
-				if(index > -1){
-					this.followersGoingDict[eventID].push(usersGoing[i]);
-					count++;
-				}
-		  }
+			console.log(typeof(event));
+			console.log(typeof(event._id));
+
+			//check if the key exists in the dictionary
+			// if(!(event._id) in this.followersGoingDict){
+			// 	this.followersGoingDict[event._id] = [];
+		  // }
+			//
+			// for(i; i<usersGoing.length; i++){
+			// 	var index = Utils.findWithAttr(this.currentUser.following, 'id',usersGoing[i]['id'])
+			// 	if(index > -1){
+			// 		this.followersGoingDict[event._id].push(usersGoing[i]['name']);
+			// 		count++;
+			// 	}
+		  // }
+
 
 			return count;
 
