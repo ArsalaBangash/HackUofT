@@ -7,12 +7,12 @@
 <ion-content>
 
 	<ion-list *ngIf="eventsReady">
-		<ion-card *ngFor="let event of events">
+		<ion-card (click)="moreInfo(event)" *ngFor="let event of events">
 			<ion-row>
 				<ion-col>
 					<h2>{{event.name}}</h2>
 					<p>{{event.city}}</p>
-					<p>{{formatStart(event.start)}} - {{formatEnd(event.end)}}</p>
+					<p>{{formatDate(event.start)}} - {{formatDate(event.end)}}</p>
 
 				</ion-col>
 
@@ -36,10 +36,8 @@
         </button>
 						</div>
 					</ion-col>
-
 				</ion-row>
 			</ion-item>
-
 		</ion-card>
 	</ion-list>
 

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Event Name</ion-title>
+    <ion-title>{{event.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -59,15 +59,14 @@
                     <ion-card-header>
                         About
                     </ion-card-header>
-                    <ion-card-content>
-                        Lawyers, Paralegals, Managing Partners, In-House Counsel, Company Executives, Entrepreneurs, Software Designers, Software Coders, Data Analysts are recommended to attend                     </ion-card-content>
+                    <ion-card-content>{{event.description}}</ion-card-content>
             </ion-card>
             <ion-card>
                     <ion-card-header>
                         Dates
                     </ion-card-header>
                     <ion-card-content>
-                    June 1, 2017
+                    {{formatDate(event.start)}} - {{formatDate(event.end)}}
                     </ion-card-content>
             </ion-card>
             <ion-card>
@@ -75,7 +74,8 @@
                         Host
                     </ion-card-header>
                     <ion-card-content>
-                    Seattle
+                      <!-- TODO: we should know the host -->
+                      {{event.city}}
                     </ion-card-content>
             </ion-card>
         </ion-row>

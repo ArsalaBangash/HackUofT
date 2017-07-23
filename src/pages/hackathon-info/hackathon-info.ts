@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {PageService} from '../../services/page_service';
+import { Event } from '../../models/event'
 
 /**
  * Generated class for the HackathonInfoPage page.
@@ -15,11 +17,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 
 export class HackathonInfoPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  hackathon: Event;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public pageService: PageService) {
+      this.hackathon = this.pageService.pageData;
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HackathonInfoPage');
+    console.log(JSON.stringify(this.hackathon))
+  }
+
+  public formatDate(date: string): string {
+    return (new Date(date)).toLocaleString('en-us');
   }
 
 }

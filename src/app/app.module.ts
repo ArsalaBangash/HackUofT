@@ -17,7 +17,7 @@ import { CurrentUserInfoPage } from '../models/currentUserInfo';
 import { Endpoints } from '../models/endpoints'
 
 
-
+import { PageService } from '../services/page_service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
@@ -68,6 +68,7 @@ import { IonicStorageModule } from '@ionic/storage';
     UserInfoPage,
     Endpoints,
     CurrentUserInfoPage,
+    PageService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

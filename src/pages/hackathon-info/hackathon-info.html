@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Hackaton Name</ion-title>
+    <ion-title>{{hackathon.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -59,15 +59,14 @@
                     <ion-card-header>
                         About
                     </ion-card-header>
-                    <ion-card-content>
-                        Lawyers, Paralegals, Managing Partners, In-House Counsel, Company Executives, Entrepreneurs, Software Designers, Software Coders, Data Analysts are recommended to attend                     </ion-card-content>
+                    <ion-card-content>{{hackathon.description}}</ion-card-content>
             </ion-card>
             <ion-card>
                     <ion-card-header>
                         Dates
                     </ion-card-header>
                     <ion-card-content>
-                    June 1, 2017 - June 3, 2017
+                      {{formatDate(hackathon.start)}} - {{formatDate(hackathon.end)}}
                     </ion-card-content>
             </ion-card>
             <ion-card>
@@ -75,7 +74,7 @@
                         Host
                     </ion-card-header>
                     <ion-card-content>
-                    Seattle
+                      {{hackathon.city}}
                     </ion-card-content>
             </ion-card>
         </ion-row>

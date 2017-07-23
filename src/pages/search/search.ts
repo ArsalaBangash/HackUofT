@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Endpoints } from '../../models/endpoints'
@@ -8,12 +8,13 @@ import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
 import { Event } from '../../models/event'
 import { Storage } from '@ionic/storage';
-
-
+import { EventInfoPage } from '../event-info/event-info'
+import { HackathonInfoPage } from '../hackathon-info/hackathon-info'
+import {PageService} from '../../services/page_service';
 
 @Component({
 	selector: 'page-search',
-	templateUrl: 'search.html'
+	templateUrl: 'search.html',
 })
 export class SearchPage {
     events: Event[];
@@ -25,7 +26,8 @@ export class SearchPage {
 
 	constructor(public platform: Platform,
 		public actionsheetCtrl: ActionSheetController, private http: Http,
-		private endpoints: Endpoints, private storage: Storage) {
+		private endpoints: Endpoints, private storage: Storage, public navCtrl: NavController,
+		public pageService: PageService) {
 		this.userService = new UserService(http, endpoints);
 		this.eventService = new EventService(http, endpoints);
 		//Adds the first three events to the events array.
@@ -42,18 +44,9 @@ export class SearchPage {
 		});
 	}
 
-	/**
-	 * Formats the start date for the event card
-	 */
-	public formatStart(startDate: string): string {
-		return (new Date(startDate)).toLocaleString('en-us');
-	}
 
-	/**
-	 * Formats the end date for the event card
-	 */
-	public formatEnd(endDate: string) {
-		return (new Date(endDate)).toLocaleString('en-us');
+	public formatDate(date: string): string {
+		return (new Date(date)).toLocaleString('en-us');
 	}
 
 	/**
@@ -89,6 +82,14 @@ export class SearchPage {
 		}, 10);
 	}
 
+	moreInfo(event){
+		this.pageService.pageData = event;
+		if (event.type == 'E')
+			this.navCtrl.push(EventInfoPage)
+		else
+			this.navCtrl.push(HackathonInfoPage)
+	}
+
 	getFriendsList() {
 		let actionSheet = this.actionsheetCtrl.create({
 			title: 'Friends Going',
@@ -111,7 +112,9 @@ export class SearchPage {
 		} else {
 			this.starEvent(eventID, eventIndex);
 		}
-    }
+   }
+
+
 
 	public starEvent(eventID: string, eventIndex: number) {
 		console.log(this.currentUser.events);
