@@ -29,7 +29,6 @@ export class HomePage {
 
 	constructor(public navCtrl: NavController, private http: Http,
 		private endpoints: Endpoints, private storage: Storage) {
-
 		this.eventService = new EventService(http, endpoints);
 		this.userService = new UserService(http, endpoints);
 		storage.get('currentUser').then((user) => {
@@ -43,7 +42,6 @@ export class HomePage {
 			)
 		});
 		this.eventsReady = true;
-
 	}
 
 }

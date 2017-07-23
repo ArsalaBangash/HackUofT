@@ -10,11 +10,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @IonicPage()
 
 @Component({
-  selector: 'page-hackathon-info',
-  templateUrl: 'hackathon-info.html',
+  selector: 'page-event-info',
+  templateUrl: 'event-info.html',
 })
 
-export class HackathonInfoPage {
+export class EventInfoPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

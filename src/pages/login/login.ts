@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
+import { HackathonInfoPage } from '../hackathon-info/hackathon-info';
+import { EventInfoPage } from '../event-info/event-info';
 import { AlertController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import {LogRegService} from '../../services/log_reg_service'
@@ -58,8 +60,6 @@ export class LoginPage {
 				error => this.showAlert(this.loginErrorTitle, this.loginFailedMessage)
 			);
 		}
-
-
 	}
 
 	/**

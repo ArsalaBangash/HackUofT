@@ -7,6 +7,8 @@ import { ForumPage } from '../pages/forum/forum';
 import { ProfilePage } from '../pages/profile/profile';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { HackathonInfoPage } from '../pages/hackathon-info/hackathon-info';
+import { EventInfoPage } from '../pages/event-info/event-info';
 import { SearchPage } from '../pages/search/search';
 import { SettingsPage } from '../pages/profile/settings/settings';
 import { RegionPage } from '../pages/profile/settings/region/region';
@@ -36,6 +38,8 @@ import { IonicStorageModule } from '@ionic/storage';
     LoginPage,
     SettingsPage,
     RegionPage,
+    HackathonInfoPage,
+    EventInfoPage
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,6 @@ import { IonicStorageModule } from '@ionic/storage';
     JsonpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
-
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -56,7 +59,8 @@ import { IonicStorageModule } from '@ionic/storage';
     LoginPage,
     SettingsPage,
     RegionPage,
-
+    HackathonInfoPage,
+    EventInfoPage
   ],
   providers: [
     StatusBar,
