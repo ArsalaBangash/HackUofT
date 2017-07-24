@@ -65,8 +65,8 @@ export class ProfilePage {
 
       //We want to display info about clicked user
       this.currentUser = navParams.get('otherUser');
-      console.log(`${this.getFollowerUrl}/${this.currentUser.userInfo['_id']}`);
-			this.getUserService(`${this.getFollowerUrl}/${this.currentUser.userInfo['_id']}`).subscribe(
+      console.log(`${this.getFollowerUrl}/${this.currentUser._id}`);
+			this.getUserService(`${this.getFollowerUrl}/${this.currentUser._id}`).subscribe(
         //result => this.isUserFollowing(result),
         data => this.isUserFollowing(data),
         error => console.log(error));
@@ -75,7 +75,7 @@ export class ProfilePage {
     } else {
       //Main User View - Get User from storage
       this.storage.get('currentUser').then((user) => {
-        currentUserId = user.userInfo['_id'];
+        currentUserId = user._id;
         this.displayUserInfo(user);
       });
     }
@@ -165,15 +165,19 @@ export class ProfilePage {
       this.followingUser = true;
 
       //Main user local storage set
-      user.following.push(this.currentUser.userInfo['_id']);
+      var userInfoStuff = {};
+      userInfoStuff['_id'] = this.currentUser._id;
+      userInfoStuff['name'] = this.currentUser.name;
+      userInfoStuff['avatar'] = this.currentUser.avatar;
+      user.following.push(userInfoStuff);
       this.storage.set('currentUser', user);
 
-      this.updateUserService(`${this.followerUrl}/${this.currentUser.userInfo['_id']}`, user).subscribe(
+      this.updateUserService(`${this.followerUrl}/${this.currentUser._id}`, user).subscribe(
         result => console.log(result),
         error => console.log(error));
 
       this.updateUserService(`${this.followingUrl}/${currentUserId}`, this.currentUser).subscribe(
-        result => this.updateFollowerValue(this.currentUser.userInfo['_id']),
+        result => this.updateFollowerValue(this.currentUser._id),
         error => console.log(error));
 
     });
@@ -185,7 +189,7 @@ export class ProfilePage {
 
       //Unfollow functionality set
       this.followingUser = false;
-      var index = Utils.findWithAttr(user.following, 'id',this.currentUser.userInfo['id'])
+      var index = Utils.findWithAttr(user.following, 'id',this.currentUser._id)
       if (index !== -1) {
         user.following.splice(index, 1);
       }
@@ -198,11 +202,11 @@ export class ProfilePage {
         error => console.log(error));
 
       //Other user is not followed by main user. update other user follower array
-      this.updateUserService(`${this.deleteFollowerUrl}/${this.currentUser.userInfo['_id']}`, user).subscribe(
-        result => this.updateFollowerValue(this.currentUser.userInfo['_id']),
+      this.updateUserService(`${this.deleteFollowerUrl}/${this.currentUser._id}`, user).subscribe(
+        result => this.updateFollowerValue(this.currentUser._id),
         error => console.log(error));
 
-      this.updateFollowerValue(this.currentUser.userInfo['_id']);
+      this.updateFollowerValue(this.currentUser._id);
     });
 
 

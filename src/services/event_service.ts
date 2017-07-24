@@ -5,7 +5,8 @@ import 'rxjs/add/operator/map';
 import { Endpoints } from '../models/endpoints'
 import { LogRegCallback } from '../models/log_reg_callback'
 import { Event } from '../models/event'
-import { UserInfo } from '../models/UserInfo2'
+import { User } from '../models/user'
+
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: headers });
 import { Injectable } from '@angular/core';
@@ -70,16 +71,16 @@ export class EventService {
       .catch(this.handleError);
   }
 
-  addUser(eventID: string, userInfo: UserInfo) {
+  addUser(eventID: string, userID: string, userName: string, userAvatar: string) {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('eventID', eventID);
-		return this.http.put(this.addUserURL, {userInfo: userInfo}, { search: params })
+		return this.http.put(this.addUserURL, {'_id': userID, 'name': userName, 'avatar': userAvatar}, { search: params })
 	}
 
-	removeUser(eventID: string, userInfo: UserInfo) {
+	removeUser(eventID: string, userID: string, userName: string, userAvatar: string) {
 		let params: URLSearchParams = new URLSearchParams();
 		params.set('eventID', eventID);
-		return this.http.put(this.removeUserURL,{userInfo: userInfo}, { search: params })
+		return this.http.put(this.removeUserURL,{'_id': userID, 'name': userName, 'avatar': userAvatar}, { search: params })
 	}
 
   private extractData(res: Response) {

@@ -1,7 +1,9 @@
 import { UserInfo } from '../models/UserInfo2'
 export class User {
 	constructor(
-		public userInfo: UserInfo,
+		public _id: string,
+		public name: string,
+		public avatar: string,
 		public email: string,
 		public verified: boolean,
 		public followers: UserInfo[],

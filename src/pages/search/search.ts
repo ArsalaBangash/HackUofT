@@ -128,21 +128,21 @@ export class SearchPage {
 
   public starEvent(eventID: string, eventIndex: number) {
 		console.log(this.currentUser.events);
-		console.log("user " + this.currentUser.userInfo['_id'] + "starring " + eventID);
+		console.log("user " + this.currentUser._id + "starring " + eventID);
 		this.currentUser.events.push(eventID);
 		console.log(this.currentUser.events);
 		this.storage.set('currentUser', this.currentUser);
 		this.userService.updateUser(this.currentUser).subscribe();
-		this.eventService.addUser(eventID, this.currentUser.userInfo).subscribe();
+		this.eventService.addUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
 	}
 
   public unstarEvent(eventID: string, eventIndex: number) {
 		console.log(this.currentUser.events)
-		console.log("user " + this.currentUser.userInfo['_id'] + "UNstarring " + eventID)
+		console.log("user " + this.currentUser._id + "UNstarring " + eventID)
 		this.currentUser.events.splice(eventIndex, 1)
 		this.storage.set('currentUser', this.currentUser);
 		this.userService.updateUser(this.currentUser).subscribe();
-		this.eventService.removeUser(eventID, this.currentUser.userInfo).subscribe();
+		this.eventService.removeUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
 	}
 
   /**
