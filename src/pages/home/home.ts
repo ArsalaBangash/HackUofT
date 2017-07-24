@@ -32,7 +32,7 @@ export class HomePage {
     storage.get('currentUser').then((user) => {
       this.currentUser = user;
       this.currentUserName = user.name;
-      this.eventService.getUserEvents(this.currentUser._id).subscribe(
+      this.eventService.getUserEvents(this.currentUser.userInfo['_id']).subscribe(
         events => {
           this.events = events;
           console.log(this.events);

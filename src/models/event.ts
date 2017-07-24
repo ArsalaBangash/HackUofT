@@ -1,5 +1,5 @@
+import { UserInfo } from '../models/UserInfo2'
 export class Event {
-
 	constructor(
 		public _id: string,
 		public name: string,
@@ -12,6 +12,7 @@ export class Event {
 		public links: string[],
 		public type: string,
 		public description: string,
+		public usersGoing: UserInfo[]
     ) {
 	}
 

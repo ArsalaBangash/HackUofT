@@ -19,18 +19,22 @@ import { PageService } from '../../services/page_service';
 })
 export class SearchPage {
   events: Event[];
+  eventService: EventService;
+	userService: UserService;
+	storageService: Storage;
   eventsReady: boolean = false;
   eventsDisplayed: number = 0;
   currentUser: User;
+  followersGoingDict = {};
+
 
   constructor(public platform: Platform,
     public actionsheetCtrl: ActionSheetController, private http: Http,
     private endpoints: Endpoints, private storage: Storage,
     public navCtrl: NavController,
-    public pageService: PageService, private eventService: EventService,
-    private userService: UserService) {
-
+    public pageService: PageService,   private eventService: EventService, private userService: UserService) {
     //Adds the first three events to the events array.
+    this.storageService = storage;
     this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
       .subscribe(
       events => {
@@ -91,10 +95,18 @@ export class SearchPage {
   }
 
   getFriendsList() {
+    var arrayOfFollowers = this.followersGoingDict[eventID];
+
+		var buttonsArray = [];
+		var j = 0;
+		for(j; j<arrayOfFollowers.length; j++) {
+			buttonsArray.push({text: arrayOfFollowers[j],})
+		}
+
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Friends Going',
       cssClass: 'action-sheets-basic-page',
-      buttons: [{ text: 'Arsala', }, { text: 'Bola', }]
+      buttons: buttonsArray
     });
     actionSheet.present();
   }
@@ -117,22 +129,61 @@ export class SearchPage {
 
 
   public starEvent(eventID: string, eventIndex: number) {
-    console.log(this.currentUser.events);
-    console.log("user " + this.currentUser._id + "starring " + eventID);
-    this.currentUser.events.push(eventID);
-    console.log(this.currentUser.events);
-    this.storage.set('currentUser', this.currentUser);
-    this.userService.updateUser(this.currentUser).subscribe();
-    this.eventService.addUser(eventID, this.currentUser._id).subscribe();
-  }
+		console.log(this.currentUser.events);
+		console.log("user " + this.currentUser.userInfo['_id'] + "starring " + eventID);
+		this.currentUser.events.push(eventID);
+		console.log(this.currentUser.events);
+		this.storage.set('currentUser', this.currentUser);
+		this.userService.updateUser(this.currentUser).subscribe();
+		this.eventService.addUser(eventID, this.currentUser.userInfo).subscribe();
+	}
 
   public unstarEvent(eventID: string, eventIndex: number) {
-    console.log(this.currentUser.events)
-    console.log("user " + this.currentUser._id + "UNstarring " + eventID)
-    this.currentUser.events.splice(eventIndex, 1)
-    this.storage.set('currentUser', this.currentUser);
-    this.userService.updateUser(this.currentUser).subscribe();
-    this.eventService.removeUser(eventID, this.currentUser._id).subscribe();
-  }
+		console.log(this.currentUser.events)
+		console.log("user " + this.currentUser.userInfo['_id'] + "UNstarring " + eventID)
+		this.currentUser.events.splice(eventIndex, 1)
+		this.storage.set('currentUser', this.currentUser);
+		this.userService.updateUser(this.currentUser).subscribe();
+		this.eventService.removeUser(eventID, this.currentUser.userInfo).subscribe();
+	}
+
+  /**
+	*Computes the number of the followers of a user that are attending
+	*a particular event. The number will be displayed in each event card
+	* @param  {Event}  event The event to be checked for which of the followers are attending
+	* @return {number} the number of followers that are attending the event
+	**/
+	public computeFriendsGoing(event:Event): number{
+			var i = 0;
+			var usersGoing = event.usersGoing;
+
+			//make an api call to get the current user
+			//for now I will just assume I have a list
+
+			var userFollowings = this.currentUser.following
+			var count = 0;
+
+
+			console.log(typeof(event));
+			console.log(typeof(event._id));
+
+			//check if the key exists in the dictionary
+			// if(!(event._id) in this.followersGoingDict){
+			// 	this.followersGoingDict[event._id] = [];
+		  // }
+			//
+			// for(i; i<usersGoing.length; i++){
+			// 	var index = Utils.findWithAttr(this.currentUser.following, 'id',usersGoing[i]['id'])
+			// 	if(index > -1){
+			// 		this.followersGoingDict[event._id].push(usersGoing[i]['name']);
+			// 		count++;
+			// 	}
+		  // }
+
+
+			return count;
+
+
+	}
 
 }

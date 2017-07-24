@@ -30,9 +30,9 @@
 				<ion-row>
 					<ion-col>
 						<div ng-app="myApp" ng-controller="myCtrl">
-							<button ion-button color="primary" clear item-end icon-left (click)="getFriendsList()">
+							<button ion-button color="primary" clear item-end icon-left (click)="getFriendsList(event._id)">
         <ion-icon name="person"></ion-icon>
-          <p>5 Friends Going </p>
+          <p>{{computeFriendsGoing(event.name, event._id, event)}} Followers Going </p>
         </button>
 						</div>
 					</ion-col>

@@ -69,17 +69,17 @@ export class EventService {
       .catch(this.handleError);
   }
 
-  addUser(eventID: string, userID: string) {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('eventID', eventID);
-    return this.http.put(this.addUserURL, { userID: userID }, { search: params })
-  }
+  addUser(eventID: string, userInfo: UserInfo) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('eventID', eventID);
+		return this.http.put(this.addUserURL, {userInfo: userInfo}, { search: params })
+	}
 
-  removeUser(eventID: string, userID: string) {
-    let params: URLSearchParams = new URLSearchParams();
-    params.set('eventID', eventID);
-    return this.http.put(this.removeUserURL, { userID: userID }, { search: params })
-  }
+	removeUser(eventID: string, userInfo: UserInfo) {
+		let params: URLSearchParams = new URLSearchParams();
+		params.set('eventID', eventID);
+		return this.http.put(this.removeUserURL,{userInfo: userInfo}, { search: params })
+	}
 
   private extractData(res: Response) {
     var eventArray = res.json();
