@@ -8,6 +8,10 @@ import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
 import { Event } from '../../models/event'
 import { Storage } from '@ionic/storage';
+
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { googleCalendar } from '../../pages/search/googleCalendar'
+
 import { EventInfoPage } from '../event-info/event-info'
 import { HackathonInfoPage } from '../hackathon-info/hackathon-info'
 import { PageService } from '../../services/page_service';
@@ -26,7 +30,7 @@ export class SearchPage {
   followersGoingDict = {};
 
 
-  constructor(public platform: Platform,
+  constructor(public platform: Platform, private googleCalendar,
     public actionsheetCtrl: ActionSheetController, private http: Http,
     private endpoints: Endpoints, private storage: Storage,
     public navCtrl: NavController,
@@ -44,6 +48,8 @@ export class SearchPage {
     this.storage.get('currentUser').then((user) => {
       this.currentUser = user;
     });
+
+    this.googleCalendar = new googleCalendar();
   }
 
 
