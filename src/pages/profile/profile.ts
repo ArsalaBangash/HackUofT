@@ -165,7 +165,7 @@ export class ProfilePage {
       this.followingUser = true;
 
       //Main user local storage set
-      user.following.push(this.currentUser._id);
+      user.following.push(this.currentUser.userInfo['_id']);
       this.storage.set('currentUser', user);
 
       this.updateUserService(`${this.followerUrl}/${this.currentUser.userInfo['_id']}`, user).subscribe(

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { Endpoints } from '../models/endpoints'
 import { LogRegCallback } from '../models/log_reg_callback'
 import { Event } from '../models/event'
+import { UserInfo } from '../models/UserInfo2'
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: headers });
 import { Injectable } from '@angular/core';

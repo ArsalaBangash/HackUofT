@@ -19,8 +19,6 @@ import { PageService } from '../../services/page_service';
 })
 export class SearchPage {
   events: Event[];
-  eventService: EventService;
-	userService: UserService;
 	storageService: Storage;
   eventsReady: boolean = false;
   eventsDisplayed: number = 0;
@@ -94,7 +92,7 @@ export class SearchPage {
       this.navCtrl.push(HackathonInfoPage)
   }
 
-  getFriendsList() {
+  getFriendsList(eventID: string) {
     var arrayOfFollowers = this.followersGoingDict[eventID];
 
 		var buttonsArray = [];
