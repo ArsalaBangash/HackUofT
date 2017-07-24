@@ -13,35 +13,33 @@ import 'rxjs/add/operator/map';
 
 
 @Component({
-	selector: 'page-home',
-	templateUrl: 'home.html'
+  selector: 'page-home',
+  providers: [EventService, UserService],
+  templateUrl: 'home.html'
 })
 
 export class HomePage {
-	eventService: EventService;
-	userService: UserService;
-	currentUser: User;
-	currentUserName: string;
-	currentUserID: string;
-    events: Event[];
-	eventsReady: boolean = false;
+  currentUser: User;
+  currentUserName: string;
+  currentUserID: string;
+  events: Event[];
+  eventsReady: boolean = false;
 
 
-	constructor(public navCtrl: NavController, private http: Http,
-		private endpoints: Endpoints, private storage: Storage) {
-		this.eventService = new EventService(http, endpoints);
-		this.userService = new UserService(http, endpoints);
-		storage.get('currentUser').then((user) => {
-			this.currentUser = user;
-			this.currentUserName = user.name;
-			this.eventService.getUserEvents(this.currentUser._id).subscribe(
-				events => {
-					this.events = events;
-					console.log(this.events);
-				}
-			)
-		});
-		this.eventsReady = true;
-	}
+  constructor(public navCtrl: NavController, private http: Http,
+    private endpoints: Endpoints, private storage: Storage,
+    private eventService: EventService, private userService: UserService) {
+    storage.get('currentUser').then((user) => {
+      this.currentUser = user;
+      this.currentUserName = user.name;
+      this.eventService.getUserEvents(this.currentUser._id).subscribe(
+        events => {
+          this.events = events;
+          console.log(this.events);
+        }
+      )
+    });
+    this.eventsReady = true;
+  }
 
 }

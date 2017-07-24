@@ -18,11 +18,15 @@ import { Endpoints } from '../models/endpoints'
 
 
 import { PageService } from '../services/page_service';
+import { UserService } from '../services/user_service';
+import { EventService } from '../services/event_service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from '../pages/login/login';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
+
+
 
 
 
@@ -69,6 +73,8 @@ import { IonicStorageModule } from '@ionic/storage';
     Endpoints,
     CurrentUserInfoPage,
     PageService,
+    UserService,
+    EventService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

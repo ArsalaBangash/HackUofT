@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {PageService} from '../../services/page_service';
+import { PageService } from '../../services/page_service';
 import { Event } from '../../models/event'
 
 /**
@@ -21,7 +21,7 @@ export class EventInfoPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public pageService: PageService) {
-      this.event = this.pageService.pageData;
+    this.event = this.pageService.pageData;
   }
 
   ionViewDidLoad() {

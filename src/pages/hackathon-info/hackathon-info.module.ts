@@ -13,4 +13,4 @@ import { HackathonInfoPage } from './hackathon-info';
     HackathonInfoPage
   ]
 })
-export class HackathonInfoPageModule {}
+export class HackathonInfoPageModule { }
