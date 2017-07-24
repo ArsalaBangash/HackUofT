@@ -75,7 +75,7 @@ export class UserService {
 
 	updateUser(updatedUser: User): Observable<string> {
 		let params: URLSearchParams = new URLSearchParams();
-		params.set('id', updatedUser._id);
+		params.set('id', updatedUser.userInfo['_id']);
 		return this.http.put(this.updateUserURL, updatedUser, { search: params})
 			.map(res => res.text())
 			.catch(this.handleError)

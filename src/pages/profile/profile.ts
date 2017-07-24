@@ -8,6 +8,7 @@ import { User } from '../../models/user'
 import { SettingsPage } from './settings/settings';
 import { Storage } from '@ionic/storage';
 import { Endpoints } from '../../models/endpoints';
+import { Utils } from '../../services/utils'
 import 'rxjs/add/operator/map';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
@@ -64,7 +65,7 @@ export class ProfilePage {
 
 			//We want to display info about clicked user
 			this.currentUser = navParams.get('otherUser');
-			console.log(`${this.getFollowerUrl}/${this.currentUser._id}`);
+			console.log(`${this.getFollowerUrl}/${this.currentUser.userInfo['_id']}`);
 			this.getUserService(`${this.getFollowerUrl}/${this.currentUser.userInfo['_id']}`).subscribe(
 				//result => this.isUserFollowing(result),
 				data => this.isUserFollowing(data),
@@ -74,7 +75,7 @@ export class ProfilePage {
 		} else {
 			//Main User View - Get User from storage
 			this.storageService.get('currentUser').then((user) => {
-				currentUserId = user.userInfo['_id]';
+				currentUserId = user.userInfo['_id'];
 				this.displayUserInfo(user);
 			});
 		}
@@ -184,7 +185,7 @@ export class ProfilePage {
 
 			//Unfollow functionality set
 			this.followingUser = false;
-			var index = user.following.indexOf(this.currentUser._id);
+			var index = Utils.findWithAttr(user.following, 'id',this.currentUser.userInfo['id'])
 			if (index !== -1) {
 				user.following.splice(index, 1);
 			}
@@ -198,7 +199,7 @@ export class ProfilePage {
 
 			//Other user is not followed by main user. update other user follower array
 			this.updateUserService(`${this.deleteFollowerUrl}/${this.currentUser.userInfo['_id']}`, user).subscribe(
-				result => this.updateFollowerValue(this.currentUser.),
+				result => this.updateFollowerValue(this.currentUser.userInfo['_id']),
 				error => console.log(error));
 
 			this.updateFollowerValue(this.currentUser.userInfo['_id']);
