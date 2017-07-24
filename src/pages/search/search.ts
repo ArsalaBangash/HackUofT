@@ -29,8 +29,9 @@ export class SearchPage {
   currentUser: User;
   followersGoingDict = {};
 
+  googleCalendar: any;
 
-  constructor(public platform: Platform, private googleCalendar,
+  constructor(public platform: Platform, private browserRef: InAppBrowser,
     public actionsheetCtrl: ActionSheetController, private http: Http,
     private endpoints: Endpoints, private storage: Storage,
     public navCtrl: NavController,
@@ -49,7 +50,7 @@ export class SearchPage {
       this.currentUser = user;
     });
 
-    this.googleCalendar = new googleCalendar();
+    this.googleCalendar = new googleCalendar(this.browserRef);
   }
 
 

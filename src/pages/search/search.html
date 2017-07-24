@@ -43,7 +43,9 @@
 			</ion-item>
 		</ion-card>
 	</ion-list>
-
+	<button ion-button color="primary" (click)="event.googleCalendar.addEvent">
+		<ion-icon name="md-calendar"></ion-icon>
+	</button>
 	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
 		<ion-infinite-scroll-content></ion-infinite-scroll-content>
 	</ion-infinite-scroll>

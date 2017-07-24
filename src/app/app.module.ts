@@ -26,7 +26,7 @@ import { LoginPage } from '../pages/login/login';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
 
@@ -75,6 +75,7 @@ import { IonicStorageModule } from '@ionic/storage';
     PageService,
     UserService,
     EventService,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
