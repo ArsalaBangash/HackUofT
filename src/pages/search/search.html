@@ -27,7 +27,7 @@
 				<button ion-button color="primary" clear item-end icon-left (click)="changeStarStatus(event._id)">
         			<ion-icon [name]="checkWhetherStarred(event)"></ion-icon>
 				</button>
-				<button ion-button color="primary" (click)="event.googleCalendar.addEvent">
+				<button ion-button color="primary" (click)="addEvent()">
 					<ion-icon name="md-calendar"></ion-icon>
 				</button>
 				<ion-row>
@@ -43,9 +43,7 @@
 			</ion-item>
 		</ion-card>
 	</ion-list>
-	<button ion-button color="primary" (click)="event.googleCalendar.addEvent">
-		<ion-icon name="md-calendar"></ion-icon>
-	</button>
+
 	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
 		<ion-infinite-scroll-content></ion-infinite-scroll-content>
 	</ion-infinite-scroll>

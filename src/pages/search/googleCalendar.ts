@@ -1,5 +1,6 @@
 import { Platform } from 'ionic-angular';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { InAppBrowser, InAppBrowserEvent } from '@ionic-native/in-app-browser';
+import { Observable } from 'rxjs/Observable';
 
 
 export class googleCalendar{
@@ -9,11 +10,11 @@ export class googleCalendar{
         'location': '800 Howard St., San Francisco, CA 94103',
         'description': 'A chance to hear more about Google\'s developer products.',
         'start': {
-            'dateTime': '2015-05-28T09:00:00-07:00',
+            'dateTime': '2017-07-26T09:00:00-07:00',
             'timeZone': 'America/Los_Angeles'
         },
         'end': {
-            'dateTime': '2015-05-28T17:00:00-07:00',
+            'dateTime': '2017-07-27T17:00:00-07:00',
             'timeZone': 'America/Los_Angeles'
         },
         'recurrence': [
@@ -35,15 +36,16 @@ export class googleCalendar{
     CLIENT_ID = '859846349396-0lj5h6cisfdouccrtj5obq6n9100m4lm.apps.googleusercontent.com';
     SCOPES = ["https://www.googleapis.com/auth/calendar"];
     APIKEY = "AIzaSyBa5O6vNrPI20xAC0PDgDvVF6O1ak2SYfI";
-    REDIRECTURL = "http://localhost/callback";
+    REDIRECTURL = "http://127.0.0.1:8100";
 
     constructor(private browserRef: InAppBrowser){
 
     }
 
-    public addEvent(event: Event){
+    public addEvent(){
         const browser = this.browserRef.create('https://accounts.google.com/o/oauth2/auth?client_id=' + this.CLIENT_ID + '&redirect_uri=' + this.REDIRECTURL + '&scope=https://www.googleapis.com/auth/calendar&approval_prompt=force&response_type=token', '_blank', 'location=no');
-        browser.on("loadstart").subscribe((event) => {
+        browser.on("loadstart")
+               .subscribe((event) => {
             if ((event["url"]).indexOf("http://localhost/callback") === 0) {
                 var url = event["url"];
                 var token = url.split('access_token=')[1].split('&token_type')[0];

@@ -51,6 +51,7 @@ export class SearchPage {
     });
 
     this.googleCalendar = new googleCalendar(this.browserRef);
+    console.log("this is google", googleCalendar)
   }
 
 
@@ -187,8 +188,10 @@ export class SearchPage {
 
 
 			return count;
-
-
-	}
+  }
+    
+  public addEvent(){
+    this.googleCalendar.addEvent();
+  }
 
 }
