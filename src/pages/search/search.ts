@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Endpoints } from '../../models/endpoints'
+import { EventPictureStatus } from '../../models/event_picture_status'
 import { UserService } from '../../services/user_service'
 import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
@@ -25,7 +26,7 @@ export class SearchPage {
   eventsPicsDisplayed: number = 0;
   currentUser: User;
   followersGoingDict = {};
-  eventPicMap: Map<string, { "ready", "picture" }>
+  eventPicMap: Map<string, {ready: boolean, picture:string}>
 
 
 
@@ -41,10 +42,9 @@ export class SearchPage {
       .subscribe(
       events => {
         this.events = events;
-        this.eventsReady = true;
         this.eventsDisplayed += events.length;
         this.addEventPics();
-
+        this.eventsReady = true;
       }
       );
     this.storage.get('currentUser').then((user) => {
@@ -57,24 +57,27 @@ export class SearchPage {
       console.log("Doing this")
       console.log(this.events)
       var currentEventID = this.events[i]._id
+      console.log(currentEventID);
       this.eventService.getEventPicture(currentEventID).subscribe(
         (eventPicData) => {
-          this.eventPicMap.set(currentEventID,
-            { "ready": true, "picture": eventPicData });
-          console.log(this.eventPicMap.get(currentEventID));
-          // console.log("Success");
+          this.eventPicMap.set(eventPicData[0], {"ready": true,
+          "picture": eventPicData[1]});
+          console.log(this.eventPicMap);
         },
         (err) => console.log("This error happened: " + err)
       )
     }
   }
 
-  public getEventPicture(eventID: string) {
-    if (this.eventPicMap.get(eventID).ready) {
-      return this.eventPicMap.get(eventID).picture;
-    } else {
-      return ""
+  public eventPictureReady(eventID: string): boolean {
+    var eventPictureStatus = this.eventPicMap.get(eventID)
+    if (eventPictureStatus != null) {
+      return eventPictureStatus.ready
     }
+  }
+
+  public getEventPicture(eventID: string): string {
+    return this.eventPicMap.get(eventID).picture;
   }
 
 
@@ -101,19 +104,19 @@ export class SearchPage {
 	 * end of the screen
 	 */
   doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
-    setTimeout(() => {
-      this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
-        .subscribe(
-        events => {
-          Array.prototype.push.apply(this.events, events);
-          this.eventsDisplayed += events.length;
-          this.addEventPics();
-        }
-        );
-      console.log('Async operation has ended');
-      infiniteScroll.complete();
-    }, 10);
+    // console.log('Begin async operation');
+    // setTimeout(() => {
+    //   this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
+    //     .subscribe(
+    //     events => {
+    //       Array.prototype.push.apply(this.events, events);
+    //       this.eventsDisplayed += events.length;
+    //       this.addEventPics();
+    //     }
+    //     );
+    //   console.log('Async operation has ended');
+    //   infiniteScroll.complete();
+    // }, 10);
   }
 
   moreInfo(event) {

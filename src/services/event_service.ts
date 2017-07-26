@@ -89,16 +89,20 @@ export class EventService {
       { search: params });
   }
 
-  getEventPicture(eventID: string): Observable<string> {
+  getEventPicture(eventID: string): Observable<string[]> {
     let params: URLSearchParams = new URLSearchParams();
     params.set('id', eventID);
     return this.http.get(this.eventPicURL, { search: params })
-      .map(this.extractResponseData)
+      .map((res) => this.mapToPicData(res, eventID))
       .catch(this.handleError);
   }
 
-  private extractResponseData(res: Response) {
-    return res.json().picture;
+  private mapToPicData(res: Response, eventID: string) {
+    var picture = res.json().picture;
+    var picData = [];
+    picData[0] = eventID;
+    picData[1] = picture;
+    return picData
   }
 
   private mapToEventsArray(res: Response) {
