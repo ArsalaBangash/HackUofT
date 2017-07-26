@@ -18,12 +18,14 @@ export class EventService {
   addUserURL: string;
   removeUserURL: string;
   userEventsURL: string;
+  eventPicURL: string;
 
   constructor(private http: Http, private endpoints: Endpoints) {
     this.userEventsURL = endpoints.API_GET_USER_EVENTS;
     this.eventURL = endpoints.API_GET_EVENTS;
     this.addUserURL = endpoints.API_ADD_EVENT_USERS;
     this.removeUserURL = endpoints.API_REMOVE_EVENT_USERS;
+    this.eventPicURL = endpoints.API_GET_EVENT_PICTURE;
   }
 
 	/**
@@ -44,7 +46,7 @@ export class EventService {
    */
   getEvents(): Observable<Event[]> {
     return this.http.get(this.eventURL)
-      .map(this.extractData)
+      .map(this.mapToEventsArray)
       .catch(this.handleError);
   }
 
@@ -58,7 +60,7 @@ export class EventService {
     let params: URLSearchParams = new URLSearchParams();
     params.set('id', userID);
     return this.http.get(this.userEventsURL, { search: params })
-      .map(this.extractData)
+      .map(this.mapToEventsArray)
       .catch(this.handleError)
   }
 
@@ -67,23 +69,39 @@ export class EventService {
     params.set('startIndex', start.toString());
     params.set('endIndex', end.toString());
     return this.http.get(this.eventURL, { search: params })
-      .map(this.extractData)
+      .map(this.mapToEventsArray)
       .catch(this.handleError);
   }
 
   addUser(eventID: string, userID: string, userName: string, userAvatar: string) {
-		let params: URLSearchParams = new URLSearchParams();
-		params.set('eventID', eventID);
-		return this.http.put(this.addUserURL, {'_id': userID, 'name': userName, 'avatar': userAvatar}, { search: params })
-	}
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('eventID', eventID);
+    return this.http.put(this.addUserURL,
+      { '_id': userID, 'name': userName, 'avatar': userAvatar },
+      { search: params });
+  }
 
-	removeUser(eventID: string, userID: string, userName: string, userAvatar: string) {
-		let params: URLSearchParams = new URLSearchParams();
-		params.set('eventID', eventID);
-		return this.http.put(this.removeUserURL,{'_id': userID, 'name': userName, 'avatar': userAvatar}, { search: params })
-	}
+  removeUser(eventID: string, userID: string, userName: string, userAvatar: string) {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('eventID', eventID);
+    return this.http.put(this.removeUserURL,
+      { '_id': userID, 'name': userName, 'avatar': userAvatar },
+      { search: params });
+  }
 
-  private extractData(res: Response) {
+  getEventPicture(eventID: string): Observable<string> {
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('id', eventID);
+    return this.http.get(this.eventPicURL, { search: params })
+      .map(this.extractResponseData)
+      .catch(this.handleError);
+  }
+
+  private extractResponseData(res: Response) {
+    return res.json().picture;
+  }
+
+  private mapToEventsArray(res: Response) {
     var eventArray = res.json();
     var events: Event[] = [];
     console.log(eventArray.length);
