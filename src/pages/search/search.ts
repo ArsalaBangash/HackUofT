@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { Endpoints } from '../../models/endpoints'
+import { EventPictureStatus } from '../../models/event_picture_status'
 import { UserService } from '../../services/user_service'
 import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
@@ -23,11 +24,14 @@ import { PageService } from '../../services/page_service';
 })
 export class SearchPage {
   events: Event[];
-	storageService: Storage;
+  storageService: Storage;
   eventsReady: boolean = false;
   eventsDisplayed: number = 0;
+  eventsPicsDisplayed: number = 0;
   currentUser: User;
   followersGoingDict = {};
+  eventPicMap: Map<string, {ready: boolean, picture:string}>
+
 
   googleCalendar: any;
 
@@ -35,15 +39,17 @@ export class SearchPage {
     public actionsheetCtrl: ActionSheetController, private http: Http,
     private endpoints: Endpoints, private storage: Storage,
     public navCtrl: NavController,
-    public pageService: PageService,   private eventService: EventService, private userService: UserService) {
+    public pageService: PageService, private eventService: EventService, private userService: UserService) {
     //Adds the first three events to the events array.
+    this.eventPicMap = new Map();
     this.storageService = storage;
     this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
       .subscribe(
       events => {
         this.events = events;
-        this.eventsReady = true;
         this.eventsDisplayed += events.length;
+        this.addEventPics();
+        this.eventsReady = true;
       }
       );
     this.storage.get('currentUser').then((user) => {
@@ -52,6 +58,34 @@ export class SearchPage {
 
     this.googleCalendar = new googleCalendar(this.browserRef);
     console.log("this is google", googleCalendar)
+  }
+
+  public addEventPics() {
+    for (var i = 0; i < this.events.length; i++) {
+      console.log("Doing this")
+      console.log(this.events)
+      var currentEventID = this.events[i]._id
+      console.log(currentEventID);
+      this.eventService.getEventPicture(currentEventID).subscribe(
+        (eventPicData) => {
+          this.eventPicMap.set(eventPicData[0], {"ready": true,
+          "picture": eventPicData[1]});
+          console.log(this.eventPicMap);
+        },
+        (err) => console.log("This error happened: " + err)
+      )
+    }
+  }
+
+  public eventPictureReady(eventID: string): boolean {
+    var eventPictureStatus = this.eventPicMap.get(eventID)
+    if (eventPictureStatus != null) {
+      return eventPictureStatus.ready
+    }
+  }
+
+  public getEventPicture(eventID: string): string {
+    return this.eventPicMap.get(eventID).picture;
   }
 
 
@@ -78,18 +112,19 @@ export class SearchPage {
 	 * end of the screen
 	 */
   doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
-    setTimeout(() => {
-      this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
-        .subscribe(
-        events => {
-          Array.prototype.push.apply(this.events, events);
-          this.eventsDisplayed += events.length;
-        }
-        );
-      console.log('Async operation has ended');
-      infiniteScroll.complete();
-    }, 10);
+    // console.log('Begin async operation');
+    // setTimeout(() => {
+    //   this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
+    //     .subscribe(
+    //     events => {
+    //       Array.prototype.push.apply(this.events, events);
+    //       this.eventsDisplayed += events.length;
+    //       this.addEventPics();
+    //     }
+    //     );
+    //   console.log('Async operation has ended');
+    //   infiniteScroll.complete();
+    // }, 10);
   }
 
   moreInfo(event) {
@@ -103,11 +138,11 @@ export class SearchPage {
   getFriendsList(eventID: string) {
     var arrayOfFollowers = this.followersGoingDict[eventID];
 
-		var buttonsArray = [];
-		var j = 0;
-		for(j; j<arrayOfFollowers.length; j++) {
-			buttonsArray.push({text: arrayOfFollowers[j],})
-		}
+    var buttonsArray = [];
+    var j = 0;
+    for (j; j < arrayOfFollowers.length; j++) {
+      buttonsArray.push({ text: arrayOfFollowers[j], })
+    }
 
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Friends Going',
@@ -135,63 +170,61 @@ export class SearchPage {
 
 
   public starEvent(eventID: string, eventIndex: number) {
-		console.log(this.currentUser.events);
-		console.log("user " + this.currentUser._id + "starring " + eventID);
-		this.currentUser.events.push(eventID);
-		console.log(this.currentUser.events);
-		this.storage.set('currentUser', this.currentUser);
-		this.userService.updateUser(this.currentUser).subscribe();
-		this.eventService.addUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
-	}
+    // console.log(this.currentUser.events);
+    // console.log("user " + this.currentUser._id + "starring " + eventID);
+    this.currentUser.events.push(eventID);
+    // console.log(this.currentUser.events);
+    this.storage.set('currentUser', this.currentUser);
+    this.userService.updateUser(this.currentUser).subscribe();
+    this.eventService.addUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
+  }
 
   public unstarEvent(eventID: string, eventIndex: number) {
-		console.log(this.currentUser.events)
-		console.log("user " + this.currentUser._id + "UNstarring " + eventID)
-		this.currentUser.events.splice(eventIndex, 1)
-		this.storage.set('currentUser', this.currentUser);
-		this.userService.updateUser(this.currentUser).subscribe();
-		this.eventService.removeUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
-	}
-
-  /**
-	*Computes the number of the followers of a user that are attending
-	*a particular event. The number will be displayed in each event card
-	* @param  {Event}  event The event to be checked for which of the followers are attending
-	* @return {number} the number of followers that are attending the event
-	**/
-	public computeFriendsGoing(event:Event): number{
-			var i = 0;
-			var usersGoing = event.usersGoing;
-
-			//make an api call to get the current user
-			//for now I will just assume I have a list
-
-			var userFollowings = this.currentUser.following
-			var count = 0;
-
-
-			console.log(typeof(event));
-			console.log(typeof(event._id));
-
-			//check if the key exists in the dictionary
-			// if(!(event._id) in this.followersGoingDict){
-			// 	this.followersGoingDict[event._id] = [];
-		  // }
-			//
-			// for(i; i<usersGoing.length; i++){
-			// 	var index = Utils.findWithAttr(this.currentUser.following, 'id',usersGoing[i]['id'])
-			// 	if(index > -1){
-			// 		this.followersGoingDict[event._id].push(usersGoing[i]['name']);
-			// 		count++;
-			// 	}
-		  // }
-
-
-			return count;
+    // console.log(this.currentUser.events)
+    // console.log("user " + this.currentUser._id + "UNstarring " + eventID)
+    this.currentUser.events.splice(eventIndex, 1)
+    this.storage.set('currentUser', this.currentUser);
+    this.userService.updateUser(this.currentUser).subscribe();
+    this.eventService.removeUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
   }
-    
-  public addEvent(){
-    this.googleCalendar.addEvent();
+
+  // /**
+  // *Computes the number of the followers of a user that are attending
+  // *a particular event. The number will be displayed in each event card
+  // * @param  {Event}  event The event to be checked for which of the followers are attending
+  // * @return {number} the number of followers that are attending the event
+  // **/
+  public computeFriendsGoing(event: Event): number {
+    var i = 0;
+    var usersGoing = event.usersGoing;
+
+    //make an api call to get the current user
+    //for now I will just assume I have a list
+
+    var userFollowings = this.currentUser.following
+    var count = 0;
+
+
+    // console.log(typeof(event));
+    // console.log(typeof(event._id));
+
+    //check if the key exists in the dictionary
+    // if(!(event._id) in this.followersGoingDict){
+    // 	this.followersGoingDict[event._id] = [];
+    // }
+    //
+    // for(i; i<usersGoing.length; i++){
+    // 	var index = Utils.findWithAttr(this.currentUser.following, 'id',usersGoing[i]['id'])
+    // 	if(index > -1){
+    // 		this.followersGoingDict[event._id].push(usersGoing[i]['name']);
+    // 		count++;
+    // 	}
+    // }
+
+
+    return count;
+
+
   }
 
 }

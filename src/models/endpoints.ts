@@ -4,21 +4,22 @@
  */
 export class Endpoints {
   readonly API_BASENAME = 'https://edmondumolu.me:4001';
-  readonly API_LOGIN = "https://edmondumolu.me:4001/users/login/";
-  readonly API_REGISTER = "https://edmondumolu.me:4001/users";
-  readonly API_UPDATE_USER = "https://edmondumolu.me:4001/users";
-  readonly API_POST_USER_EVENT = "https://edmondumolu.me:4001/users/events/add";
-  readonly API_GET_USER_BY_ID = "https://edmondumolu.me:4001/users/find";
-  readonly API_GET_USER_EVENTS = "https://edmondumolu.me:4001/users/events";
-  readonly API_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following/add";
-  readonly API_USER_FOLLOWER = "https://edmondumolu.me:4001/users/followers/add";
-  readonly API_GET_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following";
-  readonly API_GET_USER_FOLLOWER = "https://edmondumolu.me:4001/users/followers";
-  readonly API_DELETE_USER_FOLLOWING =  "https://edmondumolu.me:4001/users/following/delete";
-  readonly API_DELETE_USER_FOLLOWER =  "https://edmondumolu.me:4001/users/followers/delete";
-  readonly API_GET_EVENTS = "https://edmondumolu.me:4001/events";
-  readonly API_ADD_EVENT_USERS = "https://edmondumolu.me:4001/events/users/add";
-  readonly API_REMOVE_EVENT_USERS = "https://edmondumolu.me:4001/events/users/delete";
+  readonly API_LOGIN = this.API_BASENAME + "/users/login/";
+  readonly API_REGISTER = this.API_BASENAME + "/users";
+  readonly API_UPDATE_USER = this.API_BASENAME + "/users";
+  readonly API_POST_USER_EVENT = this.API_BASENAME + "/users/events/add";
+  readonly API_GET_USER_BY_ID = this.API_BASENAME + "/users/find";
+  readonly API_GET_USER_EVENTS = this.API_BASENAME + "/users/events";
+  readonly API_USER_FOLLOWING =  this.API_BASENAME + "/users/following/add";
+  readonly API_USER_FOLLOWER = this.API_BASENAME + "/users/followers/add";
+  readonly API_GET_USER_FOLLOWING =  this.API_BASENAME + "/users/following";
+  readonly API_GET_USER_FOLLOWER = this.API_BASENAME + "/users/followers";
+  readonly API_DELETE_USER_FOLLOWING =  this.API_BASENAME + "/users/following/delete";
+  readonly API_DELETE_USER_FOLLOWER =  this.API_BASENAME + "/users/followers/delete";
+  readonly API_GET_EVENTS = this.API_BASENAME + "/events";
+  readonly API_ADD_EVENT_USERS = this.API_BASENAME + "/events/users/add";
+  readonly API_REMOVE_EVENT_USERS = this.API_BASENAME + "/events/users/delete";
   // comeback to make sure
-  readonly API_GET_EVENT_BY_ID = "https://edmondumolu.me:4001/events/id";
+  readonly API_GET_EVENT_BY_ID = this.API_BASENAME + "/events/id";
+  readonly API_GET_EVENT_PICTURE = this.API_BASENAME + "/events/pic";
 }

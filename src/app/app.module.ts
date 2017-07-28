@@ -2,6 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
+
 
 import { ForumPage } from '../pages/forum/forum';
 import { ProfilePage } from '../pages/profile/profile';
@@ -49,6 +51,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     BrowserModule,
     HttpModule,
     JsonpModule,
+    LazyLoadImageModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -79,4 +82,4 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
-export class AppModule {}
+export class AppModule { }

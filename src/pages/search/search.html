@@ -17,8 +17,8 @@
 				</ion-col>
 
 				<ion-col width-20>
-					<ion-thumbnail>
-						<img src="assets/img/hackathon.jpg">
+					<ion-thumbnail *ngIf="eventPictureReady(event._id)">
+						<img [src]="getEventPicture(event._id)">
 					</ion-thumbnail>
 				</ion-col>
 			</ion-row>
