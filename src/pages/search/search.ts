@@ -20,13 +20,14 @@ import { PageService } from '../../services/page_service';
 })
 export class SearchPage {
   events: Event[];
-  storageService: Storage;
   eventsReady: boolean = false;
   eventsDisplayed: number = 0;
   eventsPicsDisplayed: number = 0;
   currentUser: User;
   followersGoingDict = {};
-  eventPicMap: Map<string, {ready: boolean, picture:string}>
+
+
+  eventPicMap: Map<string, { ready: boolean, picture: string }>
 
 
 
@@ -35,12 +36,20 @@ export class SearchPage {
     private endpoints: Endpoints, private storage: Storage,
     public navCtrl: NavController,
     public pageService: PageService, private eventService: EventService, private userService: UserService) {
-    //Adds the first three events to the events array.
+    //Initializes the eventPicMap
     this.eventPicMap = new Map();
-    this.storageService = storage;
+
+    //Fetches the 5 latest events present on the server
     this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
       .subscribe(
       events => {
+        /*
+          The array of events received by the server is set to the local array
+          of events, and the number of events currently in display is noted so
+          that the further fetching of events may begin with an offset. The
+          pictures for the events are fetched and the eventsReady boolean is set
+          to true so that content may be displayed.
+         */
         this.events = events;
         this.eventsDisplayed += events.length;
         this.addEventPics();
@@ -52,23 +61,32 @@ export class SearchPage {
     });
   }
 
+  /**
+   * For every event in the current events list, a picture for the vent is
+   * fetched from the server and when fully received, the eventPicMap is
+   * updated with the associated information for the event. 
+   * @return {[type]} [description]
+   */
   public addEventPics() {
     for (var i = 0; i < this.events.length; i++) {
-      console.log("Doing this")
-      console.log(this.events)
       var currentEventID = this.events[i]._id
-      console.log(currentEventID);
       this.eventService.getEventPicture(currentEventID).subscribe(
         (eventPicData) => {
-          this.eventPicMap.set(eventPicData[0], {"ready": true,
-          "picture": eventPicData[1]});
-          console.log(this.eventPicMap);
+          this.eventPicMap.set(eventPicData[0], {
+            "ready": true,
+            "picture": eventPicData[1]
+          });
         },
         (err) => console.log("This error happened: " + err)
       )
     }
   }
 
+  /**
+   * Checks whether or not a particular event's picture is ready to be displayed
+   * @param  {string}  eventID The event for which the picture is being loaded
+   * @return {boolean}         Whether or not the picture is ready to be displayed
+   */
   public eventPictureReady(eventID: string): boolean {
     var eventPictureStatus = this.eventPicMap.get(eventID)
     if (eventPictureStatus != null) {
@@ -76,6 +94,12 @@ export class SearchPage {
     }
   }
 
+  /**
+   * Returns the picture for a particular event by fetching the picture data
+   * from the eventPicMap
+   * @param  {string} eventID The event for which the picture is being fetched
+   * @return {string}         The string containing the data for the event's picture
+   */
   public getEventPicture(eventID: string): string {
     return this.eventPicMap.get(eventID).picture;
   }
@@ -104,19 +128,20 @@ export class SearchPage {
 	 * end of the screen
 	 */
   doInfinite(infiniteScroll) {
-    // console.log('Begin async operation');
-    // setTimeout(() => {
-    //   this.eventService.getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
-    //     .subscribe(
-    //     events => {
-    //       Array.prototype.push.apply(this.events, events);
-    //       this.eventsDisplayed += events.length;
-    //       this.addEventPics();
-    //     }
-    //     );
-    //   console.log('Async operation has ended');
-    //   infiniteScroll.complete();
-    // }, 10);
+    console.log('Begin async operation');
+    setTimeout(() => {
+      this.eventService
+        .getIndexedEvents(this.eventsDisplayed, this.eventsDisplayed + 5)
+        .subscribe(
+        events => {
+          Array.prototype.push.apply(this.events, events);
+          this.eventsDisplayed += events.length;
+          this.addEventPics();
+        }
+        );
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 10);
   }
 
   moreInfo(event) {
@@ -155,22 +180,40 @@ export class SearchPage {
     if (eventIndex > -1) {
       this.unstarEvent(eventID, eventIndex);
     } else {
-      this.starEvent(eventID, eventIndex);
+      this.starEvent(eventID);
     }
   }
 
 
-
-  public starEvent(eventID: string, eventIndex: number) {
+  /**
+   * Adds an event to the user's event list, updates the local storage of that
+   * user, and then updates the user on the server side. The event on the server
+   * is also updated by having the current user's information added to the
+   * usersGoing list.
+   * @param  {string} eventID    The event being starred
+   */
+  public starEvent(eventID: string) {
     // console.log(this.currentUser.events);
     // console.log("user " + this.currentUser._id + "starring " + eventID);
     this.currentUser.events.push(eventID);
     // console.log(this.currentUser.events);
     this.storage.set('currentUser', this.currentUser);
     this.userService.updateUser(this.currentUser).subscribe();
-    this.eventService.addUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
+    this.eventService.addUser(eventID,
+      this.currentUser._id,
+      this.currentUser.name,
+      this.currentUser.avatar).subscribe();
   }
 
+  /**
+   * The event is removed from the list of the user's events, and the user is
+   * subsequently updated locally and on the server. The user's information
+   * is also removed from the event's usersGoing list.
+   * @param  {string} eventID    The ID of the event being removed
+   * @param  {number} eventIndex The index within the user's event list at which
+   * the event being removed exists
+   * @return {[type]}            [description]
+   */
   public unstarEvent(eventID: string, eventIndex: number) {
     // console.log(this.currentUser.events)
     // console.log("user " + this.currentUser._id + "UNstarring " + eventID)

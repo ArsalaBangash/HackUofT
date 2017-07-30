@@ -29,7 +29,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, private http: Http,
     private endpoints: Endpoints, private storage: Storage,
     private eventService: EventService, private userService: UserService) {
-    storage.get('currentUser').then((user) => {
+    this.storage.get('currentUser').then((user) => {
       this.currentUser = user;
       this.currentUserName = user.name;
       this.eventService.getUserEvents(this.currentUser._id).subscribe(
