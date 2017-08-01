@@ -9,11 +9,14 @@ import { SettingsPage } from './settings/settings';
 import { Storage } from '@ionic/storage';
 import { Endpoints } from '../../models/endpoints';
 import { Utils } from '../../services/utils';
+import { UserInfo } from '../../models/UserInfo2';
 import 'rxjs/add/operator/map';
 
 let headers = new Headers({ 'Content-Type': 'application/json' });
 let options = new RequestOptions({ headers: headers });
 let currentUserId = "";
+let currentUserName = "";
+let currentUserAvatar = "";
 
 @Component({
   selector: 'page-profile',
@@ -76,6 +79,8 @@ export class ProfilePage {
       //Main User View - Get User from storage
       this.storage.get('currentUser').then((user) => {
         currentUserId = user._id;
+        currentUserName = user.name;
+        currentUserAvatar = user.avatar;
         this.displayUserInfo(user);
       });
     }
@@ -165,11 +170,21 @@ export class ProfilePage {
       this.followingUser = true;
 
       //Main user local storage set
-      var userInfoStuff = {};
-      userInfoStuff['_id'] = this.currentUser._id;
-      userInfoStuff['name'] = this.currentUser.name;
-      userInfoStuff['avatar'] = this.currentUser.avatar;
-      user.following.push(userInfoStuff);
+      var userInfoFollowing = {};
+      var userInfoFollowers = {};
+
+      userInfoFollowing['_id'] = this.currentUser._id;
+      userInfoFollowing['name'] = this.currentUser.name;
+      userInfoFollowing['avatar'] = this.currentUser.avatar;
+      user.following.push(userInfoFollowing);
+
+      userInfoFollowers['_id'] = currentUserId;
+      userInfoFollowers['name'] = currentUserName;
+      userInfoFollowers['avatar'] = currentUserAvatar;
+
+      var userInfoObject = Object.create(UserInfo, userInfoFollowers)
+      this.currentUser.followers.push(userInfoObject);
+
       this.storage.set('currentUser', user);
 
       this.updateUserService(`${this.followerUrl}/${this.currentUser._id}`, user).subscribe(

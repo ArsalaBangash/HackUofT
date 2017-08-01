@@ -74,19 +74,18 @@ export class EventService {
   }
 
   addUser(eventID: string, userID: string, userName: string, userAvatar: string) {
+
     let params: URLSearchParams = new URLSearchParams();
     params.set('eventID', eventID);
-    return this.http.put(this.addUserURL,
-      { '_id': userID, 'name': userName, 'avatar': userAvatar },
-      { search: params });
+    let userInfo = {'_id': userID, 'name': userName, 'avatar': userAvatar};
+		return this.http.put(this.addUserURL, {'userInfo': userInfo}, { search: params })
   }
 
   removeUser(eventID: string, userID: string, userName: string, userAvatar: string) {
     let params: URLSearchParams = new URLSearchParams();
     params.set('eventID', eventID);
-    return this.http.put(this.removeUserURL,
-      { '_id': userID, 'name': userName, 'avatar': userAvatar },
-      { search: params });
+    let userInfo = {'_id': userID, 'name': userName, 'avatar': userAvatar};
+  	return this.http.put(this.addUserURL, {'userInfo': userInfo}, { search: params })
   }
 
   getEventPicture(eventID: string): Observable<string[]> {
@@ -104,6 +103,9 @@ export class EventService {
     picData[1] = picture;
     return picData
   }
+
+
+
 
   private mapToEventsArray(res: Response) {
     var eventArray = res.json();

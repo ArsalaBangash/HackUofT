@@ -7,11 +7,14 @@ import { EventPictureStatus } from '../../models/event_picture_status'
 import { UserService } from '../../services/user_service'
 import { EventService } from '../../services/event_service'
 import { User } from '../../models/user'
+import { UserInfo } from '../../models/UserInfo2'
 import { Event } from '../../models/event'
 import { Storage } from '@ionic/storage';
 import { EventInfoPage } from '../event-info/event-info'
 import { HackathonInfoPage } from '../hackathon-info/hackathon-info'
+import { Utils } from '../../services/utils'
 import { PageService } from '../../services/page_service';
+let followersGoingDict = {};
 
 @Component({
   selector: 'page-search',
@@ -24,7 +27,7 @@ export class SearchPage {
   eventsDisplayed: number = 0;
   eventsPicsDisplayed: number = 0;
   currentUser: User;
-  followersGoingDict = {};
+  //followersGoingDict = {};
 
 
   eventPicMap: Map<string, { ready: boolean, picture: string }>
@@ -64,7 +67,7 @@ export class SearchPage {
   /**
    * For every event in the current events list, a picture for the vent is
    * fetched from the server and when fully received, the eventPicMap is
-   * updated with the associated information for the event. 
+   * updated with the associated information for the event.
    * @return {[type]} [description]
    */
   public addEventPics() {
@@ -153,13 +156,14 @@ export class SearchPage {
   }
 
   getFriendsList(eventID: string) {
-    var arrayOfFollowers = this.followersGoingDict[eventID];
+    var arrayOfFollowers = followersGoingDict[eventID];
 
     var buttonsArray = [];
     var j = 0;
     for (j; j < arrayOfFollowers.length; j++) {
       buttonsArray.push({ text: arrayOfFollowers[j], })
     }
+
 
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Friends Going',
@@ -223,38 +227,46 @@ export class SearchPage {
     this.eventService.removeUser(eventID, this.currentUser._id, this.currentUser.name, this.currentUser.avatar).subscribe();
   }
 
-  // /**
-  // *Computes the number of the followers of a user that are attending
-  // *a particular event. The number will be displayed in each event card
-  // * @param  {Event}  event The event to be checked for which of the followers are attending
-  // * @return {number} the number of followers that are attending the event
-  // **/
-  public computeFriendsGoing(event: Event): number {
-    var i = 0;
-    var usersGoing = event.usersGoing;
+  public helperToFind(list: string[], value:string): number{
+    return list.indexOf(value);
+  }
 
-    //make an api call to get the current user
-    //for now I will just assume I have a list
+
+  /**
+	*Computes the number of the followers of a user that are attending
+	*a particular event. The number will be displayed in each event card
+	* @param  {Event}  event The event to be checked for which of the followers are attending
+	* @return {number} the number of followers that are attending the event
+	**/
+	public computeFriendsGoing(eventID:string, usersGoing: UserInfo[]): number{
 
     var userFollowings = this.currentUser.following
     var count = 0;
 
 
-    // console.log(typeof(event));
-    // console.log(typeof(event._id));
+			// console.log(typeof(event));
+			// console.log(typeof(event._id));
+      //usersGoing.findIndex
 
-    //check if the key exists in the dictionary
-    // if(!(event._id) in this.followersGoingDict){
-    // 	this.followersGoingDict[event._id] = [];
-    // }
-    //
-    // for(i; i<usersGoing.length; i++){
-    // 	var index = Utils.findWithAttr(this.currentUser.following, 'id',usersGoing[i]['id'])
-    // 	if(index > -1){
-    // 		this.followersGoingDict[event._id].push(usersGoing[i]['name']);
-    // 		count++;
-    // 	}
-    // }
+			//check if the key exists in the dictionary
+			if(!(eventID in followersGoingDict)){
+				followersGoingDict[eventID] = [];
+		  }
+      //usersGoing.findIndex
+      //
+			for(i; i<usersGoing.length; i++){
+				var index = Utils.findWithAttr(userFollowings, '_id' ,usersGoing[i]['_id'])
+        //count++;
+				if(index > -1){
+          var indexInDict = this.helperToFind(followersGoingDict[eventID],usersGoing[i]['name'])
+          if(indexInDict == -1){
+    				followersGoingDict[eventID].push(usersGoing[i]['name']);
+          }
+          count++;
+
+
+				}
+		  }
 
 
     return count;
