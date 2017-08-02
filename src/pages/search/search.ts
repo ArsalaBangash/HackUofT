@@ -254,6 +254,8 @@ export class SearchPage {
 		  }
       //usersGoing.findIndex
       //
+      var i = 0;
+      
 			for(i; i<usersGoing.length; i++){
 				var index = Utils.findWithAttr(userFollowings, '_id' ,usersGoing[i]['_id'])
         //count++;
