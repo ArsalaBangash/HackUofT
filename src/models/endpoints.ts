@@ -3,7 +3,7 @@
  * constants define the route for the endpoint
  */
 export class Endpoints {
-  readonly API_BASENAME = 'https://edmondumolu.me:4001';
+  readonly API_BASENAME = 'https://edmondumolu.me:4005';
   readonly API_LOGIN = this.API_BASENAME + "/users/login/";
   readonly API_REGISTER = this.API_BASENAME + "/users";
   readonly API_UPDATE_USER = this.API_BASENAME + "/users";

@@ -32,14 +32,14 @@ export class HomePage {
     this.storage.get('currentUser').then((user) => {
       this.currentUser = user;
       this.currentUserName = user.name;
-      this.eventService.getUserEvents(this.currentUser._id).subscribe(
-        events => {
-          this.events = events;
-          console.log(this.events);
-        }
-      )
+      //   this.eventService.getUserEvents(this.currentUser._id).subscribe(
+      //     events => {
+      //       this.events = events;
+      //       console.log(this.events);
+      //     }
+      //   )
+      // });
+      this.eventsReady = true;
     });
-    this.eventsReady = true;
   }
-
 }
